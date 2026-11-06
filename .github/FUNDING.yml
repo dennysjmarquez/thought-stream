@@ -1,0 +1,8 @@
+# GitHub lee este archivo y pone un botón «Sponsor this project» en lo alto del
+# repositorio, junto a «Watch / Fork / Star»: es el sitio donde más se ve.
+#
+# Solo PayPal está activo, que es lo que el autor ya tenía. Si algún día activas
+# GitHub Sponsors, descomenta la última línea y se suma al mismo botón.
+
+custom: ["https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=SC7UXSK6B76L4"]
+# github: [dennysjmarquez]

@@ -1,0 +1,38 @@
+name: Authorship check
+
+# Every commit and every tag of this repository is written by its maintainer, and only by them.
+# This workflow fails loudly if that ever stops being true.
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: '17 5 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  authors:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+      - name: Commits and tags are written by the maintainer
+        env:
+          WANT: "Dennys José Márquez Reyes <20476777+dennysjmarquez@users.noreply.github.com>"
+        run: |
+          set -u
+          bad=0
+          while IFS='|' read -r sha author committer; do
+            if [ "$author" != "$WANT" ] || [ "$committer" != "$WANT" ]; then
+              echo "::error::commit $sha was written by $author (committer: $committer)"; bad=1
+            fi
+          done < <(git log --all --format='%h|%an <%ae>|%cn <%ce>')
+          while IFS='|' read -r tag kind tagger; do
+            if [ "$kind" != "tag" ]; then echo "::error::$tag is a lightweight tag; releases use annotated tags"; bad=1
+            elif [ "$tagger" != "$WANT" ]; then echo "::error::tag $tag was created by $tagger"; bad=1; fi
+          done < <(git for-each-ref refs/tags --format='%(refname:short)|%(objecttype)|%(taggername) %(taggeremail)')
+          exit $bad

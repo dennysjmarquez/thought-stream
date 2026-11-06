@@ -1,0 +1,75 @@
+{
+  "name": "thought-stream",
+  "version": "1.0.0-rc.1",
+  "description": "Terminal and web animations for AI \"thinking\" states, loaders and progress: a tiny zero-dependency engine plus 258 ready-made plugins. Node, browser, React, Vue and Angular.",
+  "type": "commonjs",
+  "keywords": [
+    "terminal",
+    "cli",
+    "animation",
+    "spinner",
+    "loader",
+    "progress",
+    "thinking",
+    "ai",
+    "llm",
+    "ascii",
+    "ansi",
+    "braille",
+    "tui",
+    "react",
+    "vue",
+    "angular",
+    "zero-dependency",
+    "plugin"
+  ],
+  "license": "MIT",
+  "main": "./dist/thought-stream.js",
+  "module": "./dist/thought-stream.mjs",
+  "types": "./dist/index.d.ts",
+  "style": "./dist/thought-stream.css",
+  "unpkg": "./dist/thought-stream.js",
+  "jsdelivr": "./dist/thought-stream.js",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/thought-stream.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/thought-stream.js"
+      }
+    },
+    "./thought-stream.css": "./dist/thought-stream.css",
+    "./plugins/*": "./dist/plugins/*.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "docs",
+    "CHANGELOG.md",
+    "THIRD_PARTY_NOTICES.md"
+  ],
+  "sideEffects": [
+    "./dist/plugins/**/*.js"
+  ],
+  "engines": {
+    "node": ">=14"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dennysjmarquez/thought-stream.git"
+  },
+  "bugs": {
+    "url": "https://github.com/dennysjmarquez/thought-stream/issues"
+  },
+  "homepage": "https://github.com/dennysjmarquez/thought-stream#readme",
+  "author": {
+    "name": "Dennys José Márquez Reyes",
+    "url": "https://dennysjmarquez.dev/"
+  }
+}

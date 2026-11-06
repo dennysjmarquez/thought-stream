@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ThoughtStream examples</title>
+  <link rel="stylesheet" href="../dist/thought-stream.css">
+  <style>
+    body { margin: 0; padding: 2rem 1rem; background: #0d1117; color: #e6edf3; font: 16px/1.5 system-ui, sans-serif; }
+    main { max-width: 56rem; margin: 0 auto; }
+    h1 { margin: 0 0 .25rem; font-size: 1.5rem; }
+    p { margin: .25rem 0 1rem; color: #9da7b3; }
+    .bar { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; margin-bottom: 1rem; }
+    select, button { padding: .45rem .7rem; border: 1px solid #30363d; border-radius: 6px; background: #161b22; color: inherit; font: inherit; }
+    select { flex: 1 1 18rem; min-width: 0; }
+    button { cursor: pointer; }
+    button:hover, select:hover { border-color: #58a6ff; }
+    #stage { min-height: 8rem; margin: 0; padding: 1.25rem; overflow: auto; border: 1px solid #30363d; border-radius: 8px; background: #010409; }
+    #about { margin-top: .75rem; font-size: .9rem; }
+    a { color: #58a6ff; }
+    code { color: #e6edf3; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>ThoughtStream examples</h1>
+    <p>Pick a plugin. Every one of them is a short, readable file in <code>plugins/</code>.</p>
+    <div class="bar">
+      <button id="previous" type="button" aria-label="Previous plugin">◀</button>
+      <select id="picker" aria-label="Plugin"></select>
+      <button id="next" type="button" aria-label="Next plugin">▶</button>
+    </div>
+    <pre id="stage" role="img" aria-label="The selected animation"></pre>
+    <p id="about"></p>
+  </main>
+
+  <!-- 1. the engine, 2. the examples (each one registers its plugins), 3. the page -->
+  <script src="../dist/thought-stream.js"></script>
+  <script src="plugins/00-template.js"></script>
+  <script src="plugins/01-list.js"></script>
+  <script src="plugins/02-timing.js"></script>
+  <script src="plugins/03-generator.js"></script>
+  <script src="plugins/04-placeholders.js"></script>
+  <script src="plugins/05-tracks.js"></script>
+  <script src="plugins/06-api.js"></script>
+  <script src="plugins/07-registry.js"></script>
+  <script src="plugins/08-frames.js"></script>
+  <script src="plugins/09-chars.js"></script>
+  <script src="plugins/10-math.js"></script>
+  <script src="plugins/11-string.js"></script>
+  <script src="plugins/12-color.js"></script>
+  <script src="plugins/13-palette.js"></script>
+  <script src="plugins/14-events.js"></script>
+  <script src="plugins/15-braille.js"></script>
+  <script src="plugins/16-block.js"></script>
+  <script src="plugins/17-diff.js"></script>
+  <script src="plugins/18-retro.js"></script>
+  <script>
+    var examples = [{"file":"00-template.js","topic":"template","title":"The smallest plugin file"},{"file":"01-list.js","topic":"list","title":"A list of frames"},{"file":"02-timing.js","topic":"timing","title":"Frames that change speed"},{"file":"03-generator.js","topic":"generator","title":"Generated frames and parameters"},{"file":"04-placeholders.js","topic":"placeholders","title":"Placeholders you can update live"},{"file":"05-tracks.js","topic":"tracks","title":"Several things moving at different speeds on one line"},{"file":"06-api.js","topic":"api","title":"Methods your plugin adds to the stream"},{"file":"07-registry.js","topic":"registry","title":"Registering, finding and describing plugins"},{"file":"08-frames.js","topic":"frames","title":"SDK frames: ready-made lists of frames"},{"file":"09-chars.js","topic":"chars","title":"SDK chars: character sets worth having at hand"},{"file":"10-math.js","topic":"math","title":"SDK math: smooth motion and a little chance"},{"file":"11-string.js","topic":"string","title":"SDK string: padding, cutting, wrapping and boxes"},{"file":"12-color.js","topic":"color","title":"SDK color: colour in the terminal and in the browser"},{"file":"13-palette.js","topic":"palette","title":"Colour ramps and dithering"},{"file":"14-events.js","topic":"events","title":"SDK events: a small message bus"},{"file":"15-braille.js","topic":"braille","title":"SDK BrailleCanvas: drawing with dots"},{"file":"16-block.js","topic":"block","title":"SDK BlockCanvas: solid, square pixels"},{"file":"17-diff.js","topic":"diff","title":"SDK DiffCanvas: send only what changed"},{"file":"18-retro.js","topic":"retro","title":"SDK retro: DOS art, CP437 and Durdraw files"}];
+    var picker = document.getElementById('picker');
+    var about = document.getElementById('about');
+    var stream = new ThoughtStream('#stage');
+    var timer = null;
+
+    // The plugins of an example are the names that start with its topic; 07-registry.js registers sample_registry_*.
+    function pluginsOf(example) {
+      var prefix = 'sample_' + example.topic;
+      return ThoughtStream.names().filter(function (name) { return name === prefix || name.indexOf(prefix + '_') === 0; });
+    }
+
+    function build() {
+      examples.forEach(function (example) {
+        var group = document.createElement('optgroup');
+        group.label = example.file + ' · ' + example.title;
+        pluginsOf(example).forEach(function (name) {
+          var option = document.createElement('option');
+          option.value = name; option.textContent = name; option.dataset.file = example.file;
+          group.appendChild(option);
+        });
+        if (group.children.length) picker.appendChild(group);
+      });
+    }
+
+    // {names} that a plugin leaves open get a number that keeps changing.
+    function slotsOf(plugin) {
+      var slots = {};
+      (Array.isArray(plugin.frames) ? plugin.frames : []).forEach(function (frame) {
+        var text = typeof frame === 'string' ? frame : frame.frame || frame.text || '';
+        (text.match(/\{([A-Za-z_][\w-]*)\}/g) || []).forEach(function (token) { slots[token.slice(1, -1)] = true; });
+      });
+      return Object.keys(slots);
+    }
+
+    function show(name) {
+      clearInterval(timer);
+      var slots = slotsOf(ThoughtStream.get(name)), tick = 0;
+      slots.forEach(function (slot) { stream.setTrack(slot, 0); });
+      stream.start(name);
+      timer = slots.length ? setInterval(function () {
+        tick = (tick + 7) % 101;
+        slots.forEach(function (slot) { stream.setTrack(slot, tick); });
+      }, 150) : null;
+      var option = picker.options[picker.selectedIndex];
+      var info = ThoughtStream.info(name);
+      about.innerHTML = '<code>stream.start(\'' + name + '\')</code> · ' + (info.description ? info.description + ' · ' : '') +
+        'source: <a href="plugins/' + option.dataset.file + '">' + option.dataset.file + '</a>';
+    }
+
+    function move(step) {
+      picker.selectedIndex = (picker.selectedIndex + step + picker.options.length) % picker.options.length;
+      show(picker.value);
+    }
+
+    // importDur() and friends finish in a moment, so wait a little before listing.
+    setTimeout(function () {
+      build();
+      picker.addEventListener('change', function () { show(picker.value); });
+      document.getElementById('previous').addEventListener('click', function () { move(-1); });
+      document.getElementById('next').addEventListener('click', function () { move(1); });
+      if (picker.options.length) show(picker.value);
+    }, 150);
+  </script>
+</body>
+</html>

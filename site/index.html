@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>⚡ ThoughtStream — Demo & Showcase</title>
+  <meta name="description" content="ThoughtStream: modular thinking animations and terminal effects engine. Zero dependencies.">
+  <link rel="stylesheet" href="thought-stream.css?v=1.0.0-rc.1">
+  <link rel="stylesheet" href="demo/demo.css?v=1.0.0-rc.1">
+</head>
+<body>
+
+<div class="sticky-header-container">
+  
+    <header class="topbar">
+    <div class="brand">
+      <div class="brand-logo">⚡ <span>ThoughtStream</span></div>
+      <div class="badge">v1.0.0-rc.1</div>
+    </div>
+
+        <div class="topbar-ctrl">
+      <button id="btnPause" class="ctrl-btn" title="Pause / Resume (Space)">⏸ Pause</button>
+      <button id="btnRandom" class="ctrl-btn" title="Random Animation (R)">🔀 Random</button>
+
+            <div class="speed-ctrl-group" title="Enter speed in ms directly">
+        <span class="speed-label">⏱ Speed:</span>
+        <input type="number" id="inputCustomSpeed" min="10" max="2000" step="5" value="62.5" class="speed-manual-input">
+        <span class="speed-unit">ms</span>
+      </div>
+
+      <button id="btnSpeedFast" class="ctrl-btn active" title="Fast (62.5ms)">⚡ 62.5ms</button>
+      <button id="btnSpeedMid" class="ctrl-btn" title="Slow (400ms)">🐢 400ms</button>
+      
+            <button id="btnTheater" class="ctrl-btn theater-btn" title="Toggle Theater / Cinema View (T)">🎭 Theater</button>
+
+            <button id="btnTogglePlaylist" class="ctrl-btn playlist-toggle-btn" title="Open Playlist Sequencer">
+        🎬 Playlist <span class="pl-badge-count" id="plBadgeCount">0</span>
+      </button>
+
+            <a id="btnDonateTop" class="ctrl-btn donate-top" href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=SC7UXSK6B76L4"
+         target="_blank" rel="noopener noreferrer" title="Support ThoughtStream with a PayPal donation">☕ Donate</a>
+    </div>
+  </header>
+
+    <div class="viewer-hero" id="viewerHero">
+    <div class="viewer-glow"></div>
+    
+        <div class="viewer-screen">
+      <div class="display-stage">
+        <pre class="main-display" id="mainViewer">loading...</pre>
+      </div>
+
+      <div class="viewer-meta">
+                <button id="btnPrevAnim" class="nav-mini-btn" title="Previous animation (Left Arrow)">◀</button>
+        
+        <span class="meta-plugin" id="metaName">—</span>
+        <span class="meta-cat" id="metaCat">general</span>
+        
+        <div class="meta-row">
+          <div><span class="speed-dot"></span> <span id="metaSpeed">62.5ms</span></div>
+          <div>frames: <span id="metaFrames">—</span></div>
+        </div>
+
+        <button id="btnNextAnim" class="nav-mini-btn" title="Next animation (Right Arrow)">▶</button>
+
+                <button id="btnViewerCode" class="code-pill-btn" title="View integration code for this plugin">
+          <code>&lt;/&gt;</code> How to Use
+        </button>
+      </div>
+    </div>
+  </div>
+
+    <nav class="cat-ribbon-bar" aria-label="Animation Categories">
+    <button class="ribbon-arrow left" id="btnCatScrollLeft" aria-label="Scroll categories left" title="Scroll left">‹</button>
+    
+    <div class="cat-track-wrap" id="catTrackWrap">
+      <div class="filter-row" id="catTrack">
+        <button class="active" data-cat="all">All ( <span id="countTotal">241</span> )</button>
+        <button data-cat="retro">👾 Retro BBS (3)</button>
+        <button data-cat="ai-models">🤖 AI Models (52)</button>
+        <button data-cat="classic">⌨️ Classic (53)</button>
+        <button data-cat="terminal-fx">🖥️ Terminal (49)</button>
+        <button data-cat="iconic">🏛️ Iconic (24)</button>
+        <button data-cat="nature">🌿 Nature (21)</button>
+        <button data-cat="braille">⠶ Braille (4)</button>
+        <button data-cat="physics">⚛️ Physics (6)</button>
+        <button data-cat="algorithms">📐 Algorithms (7)</button>
+        <button data-cat="fun">🎮 Fun (17)</button>
+        <button data-cat="space">🚀 Space (3)</button>
+        <button data-cat="cinema">🎬 Cinema (1)</button>
+        <button data-cat="text">✍️ Text (1)</button>
+      </div>
+    </div>
+
+    <button class="ribbon-arrow right" id="btnCatScrollRight" aria-label="Scroll categories right" title="Scroll right">›</button>
+
+    <div class="search-box">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="searchAnim" placeholder="Search (Press /)..." autocomplete="off">
+      <button id="btnClearSearch" class="search-clear-btn" title="Clear search" style="display:none">✕</button>
+    </div>
+  </nav>
+</div>
+
+<aside class="playlist-drawer" id="playlistDrawer">
+  <div class="drawer-header">
+    <div class="drawer-title">🎬 Playlist Builder</div>
+    <button class="drawer-close" id="btnCloseDrawer" title="Close drawer">✕</button>
+  </div>
+  <div class="drawer-body">
+    <div class="ctrl-label">Build your animation sequence:</div>
+    <div class="pl-queue" id="plQueue">
+      <div class="pl-empty">Click <strong>+ Playlist</strong> on any card in the catalog.</div>
+    </div>
+    <div class="pl-controls">
+      <button class="pl-btn" id="btnPlPlay" disabled>▶ Play</button>
+      <button class="pl-btn danger" id="btnPlClear" disabled>✕ Clear</button>
+    </div>
+    <div class="pl-nav" id="plNav" style="display:none">
+      <button class="sm" id="btnPlPrev" title="Previous track">⏮</button>
+      <span class="pl-track-label" id="plTrackLabel">–</span>
+      <button class="sm" id="btnPlNext" title="Next track">⏭</button>
+      <button class="sm" id="btnPlPause" title="Pause / resume playlist">⏸</button>
+      <button class="sm" id="btnPlStop" title="Stop playlist">⏹</button>
+    </div>
+  </div>
+</aside>
+<div class="drawer-backdrop" id="drawerBackdrop"></div>
+
+<main class="catalog-section">
+    <div class="grid" id="catalogGrid"></div>
+
+    <div class="pagination-bar">
+    <div class="page-info" id="pageInfo">Showing 1–24 of ...</div>
+    <div class="page-controls">
+      <button id="btnFirstPage" class="sm" title="First page">«</button>
+      <button id="btnPrevPage" class="sm">‹ Prev</button>
+      <span class="page-current" id="pageCurrent">Page 1 / 6</span>
+      <button id="btnNextPage" class="sm">Next ›</button>
+      <button id="btnLastPage" class="sm" title="Last page">»</button>
+    </div>
+    <div class="page-size-wrap">
+      <span>Show:</span>
+      <select id="pageSizeSelect">
+        <option value="24" selected>24 / page</option>
+        <option value="48">48 / page</option>
+        <option value="96">96 / page</option>
+        <option value="all">All</option>
+      </select>
+    </div>
+  </div>
+</main>
+
+<div class="modal-backdrop" id="codeModal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div class="modal-title">
+        <code>&lt;/&gt;</code> Integration: <span id="modalPluginName" style="color:var(--cyan)">pacman</span>
+      </div>
+      <button class="modal-close" id="btnCloseModal">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-meta-row">
+        <div>Category: <span id="modalMetaCat">iconic</span></div>
+        <div>Suggested Interval: <span id="modalMetaSpeed">62.5ms</span></div>
+        <div>Parameters: <span id="modalMetaParams">speed, text</span></div>
+      </div>
+
+            <div class="tab-bar">
+        <button class="tab-btn active" data-tab="vanilla">HTML / Script</button>
+        <button class="tab-btn" data-tab="react">React</button>
+        <button class="tab-btn" data-tab="angular">Angular</button>
+        <button class="tab-btn" data-tab="vue">Vue.js</button>
+        <button class="tab-btn" data-tab="nodejs">Node.js / CLI</button>
+      </div>
+
+            <div class="code-container">
+        <pre class="code-block"><code id="modalCodeText">// Loading code...</code></pre>
+        <button class="btn-copy" id="btnCopyCode">📋 Copy</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="site-footer" id="siteFooter">
+  <div class="footer-text">
+    <p class="footer-author">
+      ThoughtStream by <strong>Dennys José Márquez Reyes</strong>
+      <span class="footer-links">
+        <a href="https://dennysjmarquez.dev/" target="_blank" rel="noopener noreferrer">Website</a>
+        <a href="https://www.linkedin.com/in/dennysjmarquez/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a href="https://github.com/dennysjmarquez" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a href="https://x.com/infocodes" target="_blank" rel="noopener noreferrer">X</a>
+      </span>
+    </p>
+    <p class="footer-support">Enjoying ThoughtStream? <strong>Support it with a PayPal donation</strong> — every coffee keeps the project free and the roadmap moving.</p>
+  </div>
+    <form class="footer-donate" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank" rel="noopener noreferrer">
+    <input type="hidden" name="cmd" value="_s-xclick">
+    <input type="hidden" name="hosted_button_id" value="SC7UXSK6B76L4">
+    <input type="hidden" name="currency_code" value="USD">
+    <button type="submit" class="donate-btn" title="Donate with PayPal - a safe and easy way to pay online">☕ Donate with PayPal</button>
+  </form>
+</footer>
+
+<script src="thought-stream.js?v=1.0.0-rc.1"></script>
+<script src="plugins/text-reveal.js"></script>
+<script src="plugins/all.browser.js?v=1.0.0-rc.1"></script>
+<script src="demo/demo.js?v=1.0.0-rc.1"></script>
+</body>
+</html>

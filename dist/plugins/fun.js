@@ -1,0 +1,18 @@
+'use strict';
+require('./catalog/bouncing-dvd.js');
+require('./catalog/btc-price.js');
+require('./catalog/chess-game.js');
+require('./catalog/coffee-brew.js');
+require('./catalog/countdown2.js');
+require('./catalog/elevator.js');
+require('./catalog/finger-dance.js');
+require('./catalog/fist-bump.js');
+require('./catalog/hello-world.js');
+require('./catalog/mindblown.js');
+require('./catalog/music-notes.js');
+require('./catalog/rube-goldberg.js');
+require('./catalog/slot-machine.js');
+require('./catalog/soccer-header.js');
+require('./catalog/speedrun.js');
+require('./catalog/spinner-shark.js');
+require('./catalog/writer-block.js');

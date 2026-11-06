@@ -1,0 +1,4 @@
+# Build output: collapse it in diffs and keep it out of the language statistics.
+dist/**  -diff linguist-generated=true
+site/**  -diff linguist-generated=true
+* text=auto eol=lf
