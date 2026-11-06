@@ -9,7 +9,7 @@
   <a href="https://www.npmjs.com/package/thought-stream"><img alt="npm" src="https://img.shields.io/npm/v/thought-stream.svg"></a>
   <img alt="dependencies: 0" src="https://img.shields.io/badge/dependencies-0-brightgreen.svg">
   <img alt="types included" src="https://img.shields.io/npm/types/thought-stream.svg">
-  <a href="LICENSE"><img alt="license" src="https://img.shields.io/npm/l/thought-stream.svg"></a>
+  <a href="https://github.com/dennysjmarquez/thought-stream/blob/main/LICENSE"><img alt="license" src="https://img.shields.io/npm/l/thought-stream.svg"></a>
 </p>
 
 <p align="center">
@@ -73,9 +73,11 @@ npm install thought-stream
 Or load it from a CDN, no build step:
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/thought-stream@1/dist/thought-stream.css">
-<script src="https://cdn.jsdelivr.net/npm/thought-stream@1/dist/thought-stream.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/thought-stream/dist/thought-stream.css">
+<script src="https://cdn.jsdelivr.net/npm/thought-stream/dist/thought-stream.js"></script>
 ```
+
+Those two URLs always serve the newest published package. In production, pin the exact version you tested instead of following the newest one.
 
 Runs on Node.js 14 or newer and on any current browser. The engine and every plugin have zero dependencies.
 
@@ -135,12 +137,12 @@ setTimeout(() => stream.succeed('Deployed to production'), 3000);
 <!-- test:web -->
 ```html
 <!doctype html>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/thought-stream@1/dist/thought-stream.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/thought-stream/dist/thought-stream.css">
 
 <pre id="status" role="img" aria-label="Loading"></pre>
 
-<script src="https://cdn.jsdelivr.net/npm/thought-stream@1/dist/thought-stream.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/thought-stream@1/dist/plugins/catalog/pacman.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/thought-stream/dist/thought-stream.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/thought-stream/dist/plugins/catalog/pacman.js"></script>
 <script>
   new ThoughtStream('#status').start('pacman');
 </script>
@@ -302,11 +304,11 @@ Generator plugins take sizing and palette parameters. The same call works for ev
 
 <!-- test:web-params -->
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/thought-stream@1/dist/thought-stream.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/thought-stream/dist/thought-stream.css">
 <pre id="plasma"></pre>
 
-<script src="https://cdn.jsdelivr.net/npm/thought-stream@1/dist/thought-stream.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/thought-stream@1/dist/plugins/catalog/braille-plasma.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/thought-stream/dist/thought-stream.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/thought-stream/dist/plugins/catalog/braille-plasma.js"></script>
 <script>
   const stream = new ThoughtStream('#plasma');
   stream.start('braille_plasma', { palette: 'fire', cols: 60, rows: 14 });

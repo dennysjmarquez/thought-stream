@@ -2,6 +2,20 @@
 
 Every release of thought-stream, newest first. Versions follow [Semantic Versioning](https://semver.org/).
 
+## [1.0.0-rc.3](https://github.com/dennysjmarquez/thought-stream/releases/tag/v1.0.0-rc.3) - 2026-11-06
+
+ThoughtStream 1.0.0-rc.3 — the snippets people copy load the engine again
+
+The library is exactly the same as 1.0.0-rc.2: same engine, same 258 animations, same files. What changes is the readme once more, and this time it is the part everyone copies.
+
+Eight links loaded the engine from a CDN as `thought-stream@1/dist/...`. That `@1` means «any stable 1.x», and the only versions on npm are release candidates, so the range resolved to nothing and jsDelivr answered 404: the three copy-and-paste snippets — the plain page, the browser plugin and the parameter example — were dead on arrival. They now carry no version at all, so `/npm/thought-stream/dist/...` always serves the newest published package and keeps working after every release, the next one included.
+
+One more link was still relative: the licence badge pointed at LICENSE, and npm prefixes relative links with its own site, so it failed there too. It points at the repository now, which leaves the readme with no relative links at all: 128 links, every one of them absolute.
+
+Nothing else moves: same install, same API, same known limitations — written down under «Limitations», each with its test.
+
+This is a pre-release, so it goes out under the «next» tag: `npm install thought-stream@next` gets it, while `npm install thought-stream` keeps waiting for the stable 1.0.0.
+
 ## [1.0.0-rc.2](https://github.com/dennysjmarquez/thought-stream/releases/tag/v1.0.0-rc.2) - 2026-11-06
 
 ThoughtStream 1.0.0-rc.2 — the readme that npm shows now works
