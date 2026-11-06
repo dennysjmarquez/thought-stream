@@ -20,7 +20,7 @@
 </p>
 
 <p align="center">
-  <img src="docs/assets/hero.svg" alt="A terminal window animating four ThoughtStream plugins at once: a tokenizer, an attention progress bar, a loss sparkline and a KV-cache gauge" width="720">
+  <img src="https://cdn.jsdelivr.net/gh/dennysjmarquez/thought-stream@main/docs/assets/hero.svg" alt="A terminal window animating four ThoughtStream plugins at once: a tokenizer, an attention progress bar, a loss sparkline and a KV-cache gauge" width="720">
 </p>
 
 ThoughtStream draws animation frames made of text — spinners, progress bars, "the AI is thinking" indicators, Braille-dot scenes, half-block pixel art, even ANSI art — into a terminal or into any HTML element.
@@ -56,7 +56,7 @@ new ThoughtStream('#status').start('pacman');
 ## Why ThoughtStream
 
 - **One engine, two worlds.** The same API draws into a Node.js terminal (`process.stdout`) and into any DOM element, from plain HTML to React, Vue and Angular.
-- **258 plugins in 13 categories** — classic spinners, AI and machine-learning visualisations, terminal effects, algorithms, nature, physics, space, retro art. Every plugin is its own file, so you ship only what you use. Browse them all in the [catalog](docs/catalog.md).
+- **258 plugins in 13 categories** — classic spinners, AI and machine-learning visualisations, terminal effects, algorithms, nature, physics, space, retro art. Every plugin is its own file, so you ship only what you use. Browse them all in the [catalog](https://github.com/dennysjmarquez/thought-stream/blob/main/docs/catalog.md).
 - **Pixel art made of characters.** Built-in Braille (2×4 dots per character) and half-block (1×2 pixels per character) canvases, with true-colour output. In the browser, dense scenes and ANSI art are painted on a real `<canvas>`; ANSI art is drawn glyph by glyph, so it looks the same in every browser and font.
 - **Plays Durdraw animations.** Drop in a `.dur` file made with [Durdraw](https://durdraw.org/) and it becomes a plugin like any other — see [Playing third-party art](#playing-third-party-art-durdraw).
 - **Plugins are tiny.** An animation is an array of strings. When you need more, it can be a function that receives your parameters, or a multitrack timeline.
@@ -128,7 +128,7 @@ setTimeout(() => stream.succeed('Deployed to production'), 3000);
 
 `succeed`, `fail`, `warn` and `info` stop the animation and print a coloured status line (`✔ ✖ ⚠ ℹ`).
 
-> **Terminal note.** Most plugins draw one line and redraw it in place. A plugin whose frames span several lines (Braille scenes, ANSI art) is made for the browser: in a terminal each frame is printed below the previous one, so it scrolls. The [catalog](docs/catalog.md) lists every plugin's size in columns × lines; to animate a multi-line frame in a terminal, see [Known limitations](#known-limitations).
+> **Terminal note.** Most plugins draw one line and redraw it in place. A plugin whose frames span several lines (Braille scenes, ANSI art) is made for the browser: in a terminal each frame is printed below the previous one, so it scrolls. The [catalog](https://github.com/dennysjmarquez/thought-stream/blob/main/docs/catalog.md) lists every plugin's size in columns × lines; to animate a multi-line frame in a terminal, see [Known limitations](#known-limitations).
 
 ### Browser, no build step
 
@@ -528,7 +528,7 @@ canvas.setPixel(5, 5, '#ffffff');                 // single pixel (before render
 
 To turn existing pixels into a frame — a decoded PNG, a camera frame, generated data — use `SDK.fromPixels(pixels, width, height, { dither, palette })`.
 
-Every canvas call above has a runnable file: [`15-braille.js`](examples/plugins/15-braille.js), [`16-block.js`](examples/plugins/16-block.js) and, for terminal programs, [`17-diff.js`](examples/plugins/17-diff.js).
+Every canvas call above has a runnable file: [`15-braille.js`](https://github.com/dennysjmarquez/thought-stream/blob/main/examples/plugins/15-braille.js), [`16-block.js`](https://github.com/dennysjmarquez/thought-stream/blob/main/examples/plugins/16-block.js) and, for terminal programs, [`17-diff.js`](https://github.com/dennysjmarquez/thought-stream/blob/main/examples/plugins/17-diff.js).
 
 ### Getting hold of the real canvas
 
@@ -591,7 +591,7 @@ ThoughtStream.register({
 new ThoughtStream(process.stdout).start('my_spinner');
 ```
 
-The complete file, with every optional field and a frame of several lines: [`01-list.js`](examples/plugins/01-list.js).
+The complete file, with every optional field and a frame of several lines: [`01-list.js`](https://github.com/dennysjmarquez/thought-stream/blob/main/examples/plugins/01-list.js).
 
 ### 2. Frames that change speed
 
@@ -613,7 +613,7 @@ ThoughtStream.register({
 });
 ```
 
-Runnable, with a way to hold a frame for an exact time: [`02-timing.js`](examples/plugins/02-timing.js).
+Runnable, with a way to hold a frame for an exact time: [`02-timing.js`](https://github.com/dennysjmarquez/thought-stream/blob/main/examples/plugins/02-timing.js).
 
 ### 3. Generated frames and parameters
 
@@ -637,7 +637,7 @@ ThoughtStream.register({
 new ThoughtStream(process.stdout).start('countdown', { from: 3 });
 ```
 
-The function runs when the stream starts, with the parameters given to `start()`. Give `opts` a default (`opts = {}`): tools such as `ThoughtStream.info()` may call a generator without arguments. Runnable: [`03-generator.js`](examples/plugins/03-generator.js).
+The function runs when the stream starts, with the parameters given to `start()`. Give `opts` a default (`opts = {}`): tools such as `ThoughtStream.info()` may call a generator without arguments. Runnable: [`03-generator.js`](https://github.com/dennysjmarquez/thought-stream/blob/main/examples/plugins/03-generator.js).
 
 **Keep `cache: true` on a generator that has parameters.** With `cache: true` the frames are built once, so your parameters hold on every loop, and heavy generators cost nothing after the first pass. Without it, v2.0 calls the function again at each loop with *empty* parameters. That is the right choice only when you want fresh random frames on every pass; if you need that *and* parameters, remember them per stream:
 
@@ -691,7 +691,7 @@ stream.start('status');
 setTimeout(() => stream.setTrack('label', 'Verifying'), 2000);
 ```
 
-Placeholders also work inside frame objects (`{ frame: 'Uploading {label}', interval: 200 }`), but then add `multitrack: false` to the plugin. Otherwise the engine takes it for a multitrack template and logs an *Unmapped template placeholders* warning. Runnable: [`04-placeholders.js`](examples/plugins/04-placeholders.js). To give a plugin methods of its own, such as `stream.plugin('gauge').setLevel(60)`, see [`06-api.js`](examples/plugins/06-api.js).
+Placeholders also work inside frame objects (`{ frame: 'Uploading {label}', interval: 200 }`), but then add `multitrack: false` to the plugin. Otherwise the engine takes it for a multitrack template and logs an *Unmapped template placeholders* warning. Runnable: [`04-placeholders.js`](https://github.com/dennysjmarquez/thought-stream/blob/main/examples/plugins/04-placeholders.js). To give a plugin methods of its own, such as `stream.plugin('gauge').setLevel(60)`, see [`06-api.js`](https://github.com/dennysjmarquez/thought-stream/blob/main/examples/plugins/06-api.js).
 
 ### 5. Pixel art
 
@@ -739,7 +739,7 @@ ThoughtStream.register({
 });
 ```
 
-Runnable: [`15-braille.js`](examples/plugins/15-braille.js) (three ways to draw with dots) and [`16-block.js`](examples/plugins/16-block.js) (pixels, mirrors and pictures from a list of colours).
+Runnable: [`15-braille.js`](https://github.com/dennysjmarquez/thought-stream/blob/main/examples/plugins/15-braille.js) (three ways to draw with dots) and [`16-block.js`](https://github.com/dennysjmarquez/thought-stream/blob/main/examples/plugins/16-block.js) (pixels, mirrors and pictures from a list of colours).
 
 ### 6. Multitrack timelines
 
@@ -763,7 +763,7 @@ ThoughtStream.register({
 });
 ```
 
-Track types, scenes and timing are covered in [docs/multitrack.md](docs/multitrack.md). Runnable: [`05-tracks.js`](examples/plugins/05-tracks.js).
+Track types, scenes and timing are covered in [docs/multitrack.md](https://github.com/dennysjmarquez/thought-stream/blob/main/docs/multitrack.md). Runnable: [`05-tracks.js`](https://github.com/dennysjmarquez/thought-stream/blob/main/examples/plugins/05-tracks.js).
 
 ### Where plugin files live
 
@@ -779,7 +779,7 @@ A plugin file only has to register itself. This version works in a browser (`<sc
 });
 ```
 
-The smallest file that works this way is [`00-template.js`](examples/plugins/00-template.js). With ES modules it is shorter: `import ThoughtStream from 'thought-stream'; ThoughtStream.register({ … });`.
+The smallest file that works this way is [`00-template.js`](https://github.com/dennysjmarquez/thought-stream/blob/main/examples/plugins/00-template.js). With ES modules it is shorter: `import ThoughtStream from 'thought-stream'; ThoughtStream.register({ … });`.
 To share plugins, publish them as their own package (for example `thought-stream-plugin-yourname`) with `thought-stream` as a peer dependency.
 
 Plugin names are case-sensitive, and `snake_case` and `kebab-case` are interchangeable: `start('my_spinner')` and `start('my-spinner')` find the same plugin.
@@ -798,36 +798,36 @@ Plugin names are case-sensitive, and `snake_case` and `kebab-case` are interchan
 | `fontScale` | `'dense'` \| `'ultra'` | the plugin draws a large half-block scene (only `▀ ▄ █` and spaces, in true colour); the browser paints it on a `<canvas>` |
 | `preview` | string | the representative frame: drawn for users who prefer reduced motion, and returned by `ThoughtStream.info()` so generator plugins need not run |
 | `api` | object | live-control methods, called as `stream.plugin(name).method(...)`; each receives the stream first |
-| `template`, `tracks`, `scenes` | | multitrack timeline — see [docs/multitrack.md](docs/multitrack.md) |
+| `template`, `tracks`, `scenes` | | multitrack timeline — see [docs/multitrack.md](https://github.com/dennysjmarquez/thought-stream/blob/main/docs/multitrack.md) |
 | `multitrack` | `false` | never treat the frames as a template: for literal art that happens to contain `{braces}`, and for frame objects that carry live `{placeholders}` |
 | `defaultFg` | number 0–255 | colour for glyphs that carry no colour of their own |
 
 ## Learn by example
 
-The files in `dist/` are minified. The [`examples/`](examples/) folder is the part of the repository that is meant to be read: 20 short, runnable plugin files with one idea each, so that a question such as "how do I use `dither.bayer8`?" ends in a few lines of working code that you can copy. Between them they use every function of `ThoughtStream.SDK`, every field of a plugin definition and every kind of frame, and the header of each file says what it covers.
+The files in `dist/` are minified. The [`examples/`](https://github.com/dennysjmarquez/thought-stream/blob/main/examples/) folder is the part of the repository that is meant to be read: 20 short, runnable plugin files with one idea each, so that a question such as "how do I use `dither.bayer8`?" ends in a few lines of working code that you can copy. Between them they use every function of `ThoughtStream.SDK`, every field of a plugin definition and every kind of frame, and the header of each file says what it covers.
 
 | Example | What it shows |
 | --- | --- |
-| [`00-template.js`](examples/plugins/00-template.js) | The smallest plugin file: copy it and change the frames. |
-| [`01-list.js`](examples/plugins/01-list.js) | A plugin is a name and a list of frames; the other fields are optional. |
-| [`02-timing.js`](examples/plugins/02-timing.js) | Hold one frame longer, or change the speed of a single frame. |
-| [`03-generator.js`](examples/plugins/03-generator.js) | Build the frames with a function and take parameters from `start()`. |
-| [`04-placeholders.js`](examples/plugins/04-placeholders.js) | Leave `{slots}` in the frames and fill them while the animation runs. |
-| [`05-tracks.js`](examples/plugins/05-tracks.js) | Several parts of one line, each at its own speed, changing in scenes. |
-| [`06-api.js`](examples/plugins/06-api.js) | Give the plugin its own methods, such as `stream.plugin(name).setLevel(60)`. |
-| [`07-registry.js`](examples/plugins/07-registry.js) | Register many plugins, find them again and describe them without playing them. |
-| [`08-frames.js`](examples/plugins/08-frames.js) | Ready-made frame lists: progress bars, typewriter, spinners, rain and more. |
-| [`09-chars.js`](examples/plugins/09-chars.js) | Character sets that are already spinners: Braille, blocks, arrows, moons… |
-| [`10-math.js`](examples/plugins/10-math.js) | Easing, waves, noise and random picks for smooth motion. |
-| [`11-string.js`](examples/plugins/11-string.js) | Pad, cut, wrap and box text, and shrink a multi-line frame. |
-| [`12-color.js`](examples/plugins/12-color.js) | Colour in the terminal and in the browser with one call. |
-| [`13-palette.js`](examples/plugins/13-palette.js) | Colour ramps, Bayer dithering and Floyd–Steinberg dithering. |
-| [`14-events.js`](examples/plugins/14-events.js) | A small message bus, so plugins and your app can talk to each other. |
-| [`15-braille.js`](examples/plugins/15-braille.js) | Draw with Braille dots: three ways to fill a canvas. |
-| [`16-block.js`](examples/plugins/16-block.js) | Draw with coloured half-blocks, and turn a list of colours into a picture. |
-| [`17-diff.js`](examples/plugins/17-diff.js) | Send a terminal only what changed since the last frame. |
-| [`18-retro.js`](examples/plugins/18-retro.js) | Read DOS `.BIN` art, CP437 text and Durdraw `.dur` animations. |
-| [`19-typescript.ts`](examples/plugins/19-typescript.ts) | The same kind of plugin in TypeScript, checked by the package types. |
+| [`00-template.js`](https://github.com/dennysjmarquez/thought-stream/blob/main/examples/plugins/00-template.js) | The smallest plugin file: copy it and change the frames. |
+| [`01-list.js`](https://github.com/dennysjmarquez/thought-stream/blob/main/examples/plugins/01-list.js) | A plugin is a name and a list of frames; the other fields are optional. |
+| [`02-timing.js`](https://github.com/dennysjmarquez/thought-stream/blob/main/examples/plugins/02-timing.js) | Hold one frame longer, or change the speed of a single frame. |
+| [`03-generator.js`](https://github.com/dennysjmarquez/thought-stream/blob/main/examples/plugins/03-generator.js) | Build the frames with a function and take parameters from `start()`. |
+| [`04-placeholders.js`](https://github.com/dennysjmarquez/thought-stream/blob/main/examples/plugins/04-placeholders.js) | Leave `{slots}` in the frames and fill them while the animation runs. |
+| [`05-tracks.js`](https://github.com/dennysjmarquez/thought-stream/blob/main/examples/plugins/05-tracks.js) | Several parts of one line, each at its own speed, changing in scenes. |
+| [`06-api.js`](https://github.com/dennysjmarquez/thought-stream/blob/main/examples/plugins/06-api.js) | Give the plugin its own methods, such as `stream.plugin(name).setLevel(60)`. |
+| [`07-registry.js`](https://github.com/dennysjmarquez/thought-stream/blob/main/examples/plugins/07-registry.js) | Register many plugins, find them again and describe them without playing them. |
+| [`08-frames.js`](https://github.com/dennysjmarquez/thought-stream/blob/main/examples/plugins/08-frames.js) | Ready-made frame lists: progress bars, typewriter, spinners, rain and more. |
+| [`09-chars.js`](https://github.com/dennysjmarquez/thought-stream/blob/main/examples/plugins/09-chars.js) | Character sets that are already spinners: Braille, blocks, arrows, moons… |
+| [`10-math.js`](https://github.com/dennysjmarquez/thought-stream/blob/main/examples/plugins/10-math.js) | Easing, waves, noise and random picks for smooth motion. |
+| [`11-string.js`](https://github.com/dennysjmarquez/thought-stream/blob/main/examples/plugins/11-string.js) | Pad, cut, wrap and box text, and shrink a multi-line frame. |
+| [`12-color.js`](https://github.com/dennysjmarquez/thought-stream/blob/main/examples/plugins/12-color.js) | Colour in the terminal and in the browser with one call. |
+| [`13-palette.js`](https://github.com/dennysjmarquez/thought-stream/blob/main/examples/plugins/13-palette.js) | Colour ramps, Bayer dithering and Floyd–Steinberg dithering. |
+| [`14-events.js`](https://github.com/dennysjmarquez/thought-stream/blob/main/examples/plugins/14-events.js) | A small message bus, so plugins and your app can talk to each other. |
+| [`15-braille.js`](https://github.com/dennysjmarquez/thought-stream/blob/main/examples/plugins/15-braille.js) | Draw with Braille dots: three ways to fill a canvas. |
+| [`16-block.js`](https://github.com/dennysjmarquez/thought-stream/blob/main/examples/plugins/16-block.js) | Draw with coloured half-blocks, and turn a list of colours into a picture. |
+| [`17-diff.js`](https://github.com/dennysjmarquez/thought-stream/blob/main/examples/plugins/17-diff.js) | Send a terminal only what changed since the last frame. |
+| [`18-retro.js`](https://github.com/dennysjmarquez/thought-stream/blob/main/examples/plugins/18-retro.js) | Read DOS `.BIN` art, CP437 text and Durdraw `.dur` animations. |
+| [`19-typescript.ts`](https://github.com/dennysjmarquez/thought-stream/blob/main/examples/plugins/19-typescript.ts) | The same kind of plugin in TypeScript, checked by the package types. |
 
 Play them without writing anything. In a terminal:
 
@@ -836,7 +836,7 @@ node examples/run.js              # list every plugin
 node examples/run.js 08           # play the plugins of example 08
 ```
 
-or open [`examples/index.html`](examples/index.html) in a browser and pick a plugin from the list. [`examples/README.md`](examples/README.md) has the full table, with what each file covers, and explains how the files are built. They are tested before every release, so they keep working.
+or open [`examples/index.html`](https://github.com/dennysjmarquez/thought-stream/blob/main/examples/index.html) in a browser and pick a plugin from the list. [`examples/README.md`](https://github.com/dennysjmarquez/thought-stream/blob/main/examples/README.md) has the full table, with what each file covers, and explains how the files are built. They are tested before every release, so they keep working.
 
 ## Playing third-party art (Durdraw)
 
@@ -928,25 +928,25 @@ Read-only properties: `isPaused`, `isRandom`, `isPlaylist`, `frameCount`, `curre
 | `ThoughtStream.importDur(source, opts?)` · `importArt(source, opts?)` | [play Durdraw art](#playing-third-party-art-durdraw) |
 | `ThoughtStream.compileTracks(plugin)` | turn a multitrack definition into plain frames |
 
-Runnable examples: [`07-registry.js`](examples/plugins/07-registry.js) for `register`, `registerAll`, `use`, `get`, `has`, `names`, `randomName`, `info`, `listInfo`, `getSnippets` and `hasSnippets`; [`05-tracks.js`](examples/plugins/05-tracks.js) for `compileTracks`; [`18-retro.js`](examples/plugins/18-retro.js) for `importDur` and `importArt`.
+Runnable examples: [`07-registry.js`](https://github.com/dennysjmarquez/thought-stream/blob/main/examples/plugins/07-registry.js) for `register`, `registerAll`, `use`, `get`, `has`, `names`, `randomName`, `info`, `listInfo`, `getSnippets` and `hasSnippets`; [`05-tracks.js`](https://github.com/dennysjmarquez/thought-stream/blob/main/examples/plugins/05-tracks.js) for `compileTracks`; [`18-retro.js`](https://github.com/dennysjmarquez/thought-stream/blob/main/examples/plugins/18-retro.js) for `importDur` and `importArt`.
 
 ### `ThoughtStream.SDK`
 
 | Namespace | Contents |
 |---|---|
-| [`frames`](examples/plugins/08-frames.js) | `progressBar`, `typewriter`, `dotReveal`, `spinner`, `gradientPulse`, `matrixRain`, `bounce`, `reverse`, `repeat`, `sequence`, `hold`, `crossfade`, `heartbeat` |
-| [`chars`](examples/plugins/09-chars.js) | curated Unicode sets: `braille`, `blocks`, `vbars`, `hbars`, `box`, `arrows`, `clock`, `moon`, `dots`, … |
-| [`math`](examples/plugins/10-math.js) | `lerp`, `clamp`, `map`, `sinWave`, `easeIn`, `easeOut`, `easeInOut`, `randInt`, `pick`, `shuffle`, `linspace`, `noise2D` |
-| [`string`](examples/plugins/11-string.js) | `center`, `padLeft`, `truncate`, `wordWrap`, `fill`, `box`, `scaleFrame` |
-| [`color`](examples/plugins/12-color.js) | `paint(text, { color, bg, bold, dim, italic, underline, blink, invert })` works everywhere — Node terminal and browser. `color` and `bg` take `'#rgb'`, `'#rrggbb'` or one of `black red green yellow blue magenta cyan white`; any other value is ignored. `green`, `cyan`, `neon`, … colour only in a Node terminal and return plain text elsewhere |
-| [`BrailleCanvas`](examples/plugins/15-braille.js) · [`BlockCanvas`](examples/plugins/16-block.js) | [pixel canvases](#pixel-art-in-text-braille-and-half-blocks) |
-| [`DiffCanvas`](examples/plugins/17-diff.js) | terminal-only: send just the cells that changed since the last frame |
-| [`fromPixels`](examples/plugins/16-block.js) | turn a pixel array into a half-block frame, with optional dithering and palette |
-| [`palette`, `dither`](examples/plugins/13-palette.js) | colour ramps and Bayer / Floyd–Steinberg dithering |
-| [`events`](examples/plugins/14-events.js) | a tiny pub/sub bus shared by plugins: `on`, `off`, `once`, `emit`, `clear` |
-| [`retro`](examples/plugins/18-retro.js) | retro-art tools: `palette16`, the CP437 table, `fromBin(bytes, width = 80)` (decodes a `.BIN` text-mode dump into an ANSI frame), `modemDraw(frame, { linesPerStep, interval })` (returns frames that reveal a picture a couple of lines at a time, like a dial-up BBS) and the Durdraw readers behind `importDur` |
+| [`frames`](https://github.com/dennysjmarquez/thought-stream/blob/main/examples/plugins/08-frames.js) | `progressBar`, `typewriter`, `dotReveal`, `spinner`, `gradientPulse`, `matrixRain`, `bounce`, `reverse`, `repeat`, `sequence`, `hold`, `crossfade`, `heartbeat` |
+| [`chars`](https://github.com/dennysjmarquez/thought-stream/blob/main/examples/plugins/09-chars.js) | curated Unicode sets: `braille`, `blocks`, `vbars`, `hbars`, `box`, `arrows`, `clock`, `moon`, `dots`, … |
+| [`math`](https://github.com/dennysjmarquez/thought-stream/blob/main/examples/plugins/10-math.js) | `lerp`, `clamp`, `map`, `sinWave`, `easeIn`, `easeOut`, `easeInOut`, `randInt`, `pick`, `shuffle`, `linspace`, `noise2D` |
+| [`string`](https://github.com/dennysjmarquez/thought-stream/blob/main/examples/plugins/11-string.js) | `center`, `padLeft`, `truncate`, `wordWrap`, `fill`, `box`, `scaleFrame` |
+| [`color`](https://github.com/dennysjmarquez/thought-stream/blob/main/examples/plugins/12-color.js) | `paint(text, { color, bg, bold, dim, italic, underline, blink, invert })` works everywhere — Node terminal and browser. `color` and `bg` take `'#rgb'`, `'#rrggbb'` or one of `black red green yellow blue magenta cyan white`; any other value is ignored. `green`, `cyan`, `neon`, … colour only in a Node terminal and return plain text elsewhere |
+| [`BrailleCanvas`](https://github.com/dennysjmarquez/thought-stream/blob/main/examples/plugins/15-braille.js) · [`BlockCanvas`](https://github.com/dennysjmarquez/thought-stream/blob/main/examples/plugins/16-block.js) | [pixel canvases](#pixel-art-in-text-braille-and-half-blocks) |
+| [`DiffCanvas`](https://github.com/dennysjmarquez/thought-stream/blob/main/examples/plugins/17-diff.js) | terminal-only: send just the cells that changed since the last frame |
+| [`fromPixels`](https://github.com/dennysjmarquez/thought-stream/blob/main/examples/plugins/16-block.js) | turn a pixel array into a half-block frame, with optional dithering and palette |
+| [`palette`, `dither`](https://github.com/dennysjmarquez/thought-stream/blob/main/examples/plugins/13-palette.js) | colour ramps and Bayer / Floyd–Steinberg dithering |
+| [`events`](https://github.com/dennysjmarquez/thought-stream/blob/main/examples/plugins/14-events.js) | a tiny pub/sub bus shared by plugins: `on`, `off`, `once`, `emit`, `clear` |
+| [`retro`](https://github.com/dennysjmarquez/thought-stream/blob/main/examples/plugins/18-retro.js) | retro-art tools: `palette16`, the CP437 table, `fromBin(bytes, width = 80)` (decodes a `.BIN` text-mode dump into an ANSI frame), `modemDraw(frame, { linesPerStep, interval })` (returns frames that reveal a picture a couple of lines at a time, like a dial-up BBS) and the Durdraw readers behind `importDur` |
 
-TypeScript definitions ship with the package (`import ThoughtStream from 'thought-stream'`); [`19-typescript.ts`](examples/plugins/19-typescript.ts) is a plugin written against them.
+TypeScript definitions ship with the package (`import ThoughtStream from 'thought-stream'`); [`19-typescript.ts`](https://github.com/dennysjmarquez/thought-stream/blob/main/examples/plugins/19-typescript.ts) is a plugin written against them.
 
 ### Colour in frames
 
@@ -980,9 +980,9 @@ These are the behaviours of v2.0 that surprise people. Each has a workaround, an
 | A frame after a shorter one is held too long | the drift correction misreads a deliberate change of delay | keep neighbouring delays equal; build long holds from identical frames — see [The timing model](#the-timing-model) |
 | `next()` keeps showing the same frame on a paused stream | `next()` shows the following frame without moving the position | step with `seek(i + 1)` |
 | A multi-line plugin scrolls in the terminal | in Node every frame is written as `\r`, clear-line, then the frame; a frame that contains line breaks therefore stacks | use the browser, or draw it yourself in headless mode (below) |
-| A very wide plugin wraps in a narrow terminal | the engine does not clip frames to the terminal width | check the *Size* column of the [catalog](docs/catalog.md), or choose a narrower plugin |
-| `DiffCanvas` draws gaps and stray characters when it is given `BlockCanvas` frames | `BlockCanvas` writes one colour code for a whole run of equal cells, while `DiffCanvas` expects one code per cell | use `DiffCanvas` with `BrailleCanvas` frames, with or without colour: [`17-diff.js`](examples/plugins/17-diff.js) |
-| `dither.floydSteinberg` without a palette, and `fromPixels` with `dither: true`, turn white and other very bright colours black | the default quantiser rounds a colour channel of 240 or more (counting the error it carries over from its neighbours) up to 256, which wraps to 0; `fromPixels` snaps to your `palette` first and then dithers without it | call `dither.floydSteinberg(pixels, width, height, palette)` yourself, with a palette, and pass the result to `fromPixels` without `dither`: [`16-block.js`](examples/plugins/16-block.js) |
+| A very wide plugin wraps in a narrow terminal | the engine does not clip frames to the terminal width | check the *Size* column of the [catalog](https://github.com/dennysjmarquez/thought-stream/blob/main/docs/catalog.md), or choose a narrower plugin |
+| `DiffCanvas` draws gaps and stray characters when it is given `BlockCanvas` frames | `BlockCanvas` writes one colour code for a whole run of equal cells, while `DiffCanvas` expects one code per cell | use `DiffCanvas` with `BrailleCanvas` frames, with or without colour: [`17-diff.js`](https://github.com/dennysjmarquez/thought-stream/blob/main/examples/plugins/17-diff.js) |
+| `dither.floydSteinberg` without a palette, and `fromPixels` with `dither: true`, turn white and other very bright colours black | the default quantiser rounds a colour channel of 240 or more (counting the error it carries over from its neighbours) up to 256, which wraps to 0; `fromPixels` snaps to your `palette` first and then dithers without it | call `dither.floydSteinberg(pixels, width, height, palette)` yourself, with a palette, and pass the result to `fromPixels` without `dither`: [`16-block.js`](https://github.com/dennysjmarquez/thought-stream/blob/main/examples/plugins/16-block.js) |
 | `window.mainStream` appears in the browser | every new stream publishes itself under that name | ignore it; it is simply the most recent stream |
 
 **Animating a multi-line frame in place in a terminal** — run the stream headless and move the cursor yourself:
@@ -1014,7 +1014,7 @@ stream.start('braille_plasma');
 
 ThoughtStream stands on a tradition of text-mode art that it deeply respects.
 
-**[Durdraw](https://durdraw.org/)** — the terminal ASCII/ANSI art editor and animator by Sam Foster, released under the BSD 3-Clause licence — defines the `.dur` format that ThoughtStream can play. Several plugins in the `retro` category are converted from artworks in Durdraw's example collection; the Durdraw project credits the artists cmang, H7, LDA, HK and LnLcFlx. Their licence and credits are reproduced in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+**[Durdraw](https://durdraw.org/)** — the terminal ASCII/ANSI art editor and animator by Sam Foster, released under the BSD 3-Clause licence — defines the `.dur` format that ThoughtStream can play. Several plugins in the `retro` category are converted from artworks in Durdraw's example collection; the Durdraw project credits the artists cmang, H7, LDA, HK and LnLcFlx. Their licence and credits are reproduced in [THIRD_PARTY_NOTICES.md](https://github.com/dennysjmarquez/thought-stream/blob/main/THIRD_PARTY_NOTICES.md).
 
 ThoughtStream is an independent project. It is **not affiliated with, endorsed by or sponsored by** Durdraw or any of those artists; their names are used only to give credit. If you enjoy this kind of work, please support Durdraw (donations are accepted on [durdraw.org](https://durdraw.org/)) and the artists who keep the scene alive. If you are an author and would like your credit worded differently, or your work removed, open an issue and it will be handled promptly.
 
@@ -1034,4 +1034,4 @@ helps just as much, and it is what moves the roadmap.
 
 ## License
 
-Released under the MIT licence — see [LICENSE](LICENSE). Third-party components keep their own licences — see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+Released under the MIT licence — see [LICENSE](https://github.com/dennysjmarquez/thought-stream/blob/main/LICENSE). Third-party components keep their own licences — see [THIRD_PARTY_NOTICES.md](https://github.com/dennysjmarquez/thought-stream/blob/main/THIRD_PARTY_NOTICES.md).

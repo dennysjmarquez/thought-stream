@@ -1,6 +1,6 @@
 {
   "name": "thought-stream",
-  "version": "1.0.0-rc.1",
+  "version": "1.0.0-rc.2",
   "description": "Terminal and web animations for AI \"thinking\" states, loaders and progress: a tiny zero-dependency engine plus 258 ready-made plugins. Node, browser, React, Vue and Angular.",
   "type": "commonjs",
   "keywords": [

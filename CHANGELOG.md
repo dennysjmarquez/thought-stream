@@ -2,6 +2,16 @@
 
 Every release of thought-stream, newest first. Versions follow [Semantic Versioning](https://semver.org/).
 
+## [1.0.0-rc.2](https://github.com/dennysjmarquez/thought-stream/releases/tag/v1.0.0-rc.2) - 2026-11-06
+
+ThoughtStream 1.0.0-rc.2 — the readme that npm shows now works
+
+The library is exactly the same as 1.0.0-rc.1: same engine, same 258 animations, same files. What changes is the readme on the package page. npm rewrites every relative path of a readme to its own site, so on 1.0.0-rc.1 the illustration at the top did not load and 61 links were dead: the 20 examples, the plugin catalog, the licence and the third-party notices. They now point at the repository, so they open from npm exactly as they do from GitHub.
+
+Nothing else moves: same install, same API, same known limitations — written down under «Limitations», each with its test.
+
+This is a pre-release, so it goes out under the «next» tag: `npm install thought-stream@next` gets it, while `npm install thought-stream` keeps waiting for the stable 1.0.0.
+
 ## [1.0.0-rc.1](https://github.com/dennysjmarquez/thought-stream/releases/tag/v1.0.0-rc.1) - 2026-11-06
 
 ThoughtStream 1.0.0-rc.1 — terminal animations for Node and the browser
