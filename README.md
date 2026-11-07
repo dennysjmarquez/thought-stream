@@ -1,8 +1,8 @@
 <h1 align="center">ThoughtStream</h1>
 
 <p align="center">
-  <strong>Terminal-style text animations for the browser and the command line.</strong><br>
-  258 ready-made animations, one tiny zero-dependency engine, and a plugin format you can write in five lines.
+  <strong>Text animations in ASCII, ANSI, Unicode and Braille — for terminals and browsers, with one API and one plugin format.</strong><br>
+  259+ ready-made animations. Zero dependencies. Write your own plugin in five lines.
 </p>
 
 <p align="center">
@@ -56,7 +56,7 @@ new ThoughtStream('#status').start('pacman');
 ## Why ThoughtStream
 
 - **One engine, two worlds.** The same API draws into a Node.js terminal (`process.stdout`) and into any DOM element, from plain HTML to React, Vue and Angular.
-- **258 plugins in 13 categories** — classic spinners, AI and machine-learning visualisations, terminal effects, algorithms, nature, physics, space, retro art. Every plugin is its own file, so you ship only what you use. Browse them all in the [catalog](https://github.com/dennysjmarquez/thought-stream/blob/main/docs/catalog.md).
+- **259 plugins in 13 categories** — classic spinners, AI and machine-learning visualisations, terminal effects, algorithms, nature, physics, space, retro art. Every plugin is its own file, so you ship only what you use. Browse them all in the [catalog](https://github.com/dennysjmarquez/thought-stream/blob/main/docs/catalog.md).
 - **Pixel art made of characters.** Built-in Braille (2×4 dots per character) and half-block (1×2 pixels per character) canvases, with true-colour output. In the browser, dense scenes and ANSI art are painted on a real `<canvas>`; ANSI art is drawn glyph by glyph, so it looks the same in every browser and font.
 - **Plays Durdraw animations.** Drop in a `.dur` file made with [Durdraw](https://durdraw.org/) and it becomes a plugin like any other — see [Playing third-party art](#playing-third-party-art-durdraw).
 - **Plugins are tiny.** An animation is an array of strings. When you need more, it can be a function that receives your parameters, or a multitrack timeline.
@@ -374,9 +374,9 @@ stream.playlist([
   onItem: (track, index) => console.error('now playing #' + index),
 });
 
-// Or let the engine shuffle:
+// Or let the engine shuffle (Fisher-Yates deck, no repeats until exhausted):
 // stream.startRandom();                                          // every loaded plugin, every 2.6 s
-// stream.startRandom({ category: 'ai-models', interval: 3000 });
+// stream.startRandom({ category: 'ai-models', interval: 2600, hold: 1000 }); // with visual hold
 ```
 
 ### Callbacks
@@ -914,7 +914,7 @@ Durdraw is a project we admire — please see [Acknowledgements](#acknowledgemen
 | `playCustom(frames, name?, opts?)` | play an array of frames that is not a registered plugin |
 | `playlist(items, { loop, duration, onItem })` | play items in order — see [Playlists](#playlists-and-random-rotation) |
 | `playlistNext()` · `playlistPrev()` · `playlistGoto(i)` · `pausePlaylist()` · `resumePlaylist()` · `stopPlaylist()` | playlist control |
-| `startRandom(plugins? \| { plugins, category, filter, interval })` · `stopRandom()` | rotate randomly |
+| `startRandom(plugins? \| { plugins, category, filter, interval, hold })` · `stopRandom()` | rotate randomly with shuffle deck and optional visual hold |
 | `destroy()` | stop and release timers, observers and listeners |
 
 Read-only properties: `isPaused`, `isRandom`, `isPlaylist`, `frameCount`, `currentName`. Settable: `loop`, `speed`.

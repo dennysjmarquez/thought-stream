@@ -57,6 +57,7 @@ require('./catalog/competition-bars.js');
 require('./catalog/conformal-coverage.js');
 require('./catalog/conformal-set.js');
 require('./catalog/context-window.js');
+require('./catalog/cosmic-singularity.js');
 require('./catalog/countdown2.js');
 require('./catalog/cpu-cores.js');
 require('./catalog/cpu-spike.js');

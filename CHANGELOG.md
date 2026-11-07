@@ -2,6 +2,21 @@
 
 Every release of thought-stream, newest first. Versions follow [Semantic Versioning](https://semver.org/).
 
+## [1.0.0-rc.4](https://github.com/dennysjmarquez/thought-stream/releases/tag/v1.0.0-rc.4) - 2026-11-07
+
+ThoughtStream 1.0.0-rc.4 — cinematic random mode, OWASP security suite, and the cosmic singularity showcase
+
+This release candidate introduces cycle-aware random playback, an automated OWASP security verification suite, and a definitive showcase animation that exercises the entire graphics SDK in a single composition.
+
+What changed
+
+- Random mode runs to completion: `startRandom()` now observes the natural duration of each animation loop instead of cutting frames mid-cycle. Each animation reaches its final frame, pauses for a visual hold (730 ms by default), and smoothly transitions to the next item with a 300 ms fade.
+- Fisher-Yates shuffle deck: Random rotation now shuffles the entire catalog without replacement, guaranteeing that all animations play once before any repeats, with collision guards across cycle boundaries.
+- OWASP security suite: A dedicated 12-check test suite validates resilience against cross-site scripting (A03), prototype pollution (A08), regular expression denial of service (A04), memory leaks, and zero runtime dependencies (A06). Available via `npm run test:security`.
+- Showcase plugin (`cosmic_singularity`): An all-in-one terminal animation in the `space` category demonstrating 100% of the ThoughtStream SDK (48 surfaces) across four acts: sub-pixel Braille particle collapse, hybrid Braille/HalfBlock fusion with Bayer dithering, 60 FPS event horizon telemetry HUD, and Floyd-Steinberg supernova with CP437 typography. Total animations in catalog: 259.
+
+This is a pre-release published under the «next» tag: `npm install thought-stream@next` installs it; `npm install thought-stream` keeps waiting for the stable 1.0.0.
+
 ## [1.0.0-rc.3](https://github.com/dennysjmarquez/thought-stream/releases/tag/v1.0.0-rc.3) - 2026-11-06
 
 ThoughtStream 1.0.0-rc.3 — the snippets people copy load the engine again

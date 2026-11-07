@@ -1,6 +1,6 @@
 # Plugin catalog
 
-Every plugin that ships in the package, generated from the code that is published — 258 plugins in 13 categories.
+Every plugin that ships in the package, generated from the code that is published — 259 plugins in 13 categories.
 
 - **Frames** and **Size** describe the default output (a generator reports what it produces with no options). **Size** is columns × lines of the widest/tallest frame.
 - Wider than 80 columns, or taller than one line, means it is meant for a browser or a roomy terminal; the terminal section of the [README](../README.md) explains what happens in a narrow one.
@@ -18,7 +18,7 @@ Every plugin that ships in the package, generated from the code that is publishe
 | [nature](#nature) | 21 |
 | [physics](#physics) | 6 |
 | [retro](#retro) | 20 |
-| [space](#space) | 3 |
+| [space](#space) | 4 |
 | [terminal-fx](#terminal-fx) | 49 |
 | [text](#text) | 1 |
 
@@ -303,6 +303,7 @@ Every plugin that ships in the package, generated from the code that is publishe
 
 | Name | Description | Frames | Interval | Size | File |
 | --- | --- | ---: | ---: | ---: | --- |
+| `cosmic_singularity` | The definitive ThoughtStream showcase: 4-act animation covering all 48 SDK surfaces. Gravitational collapse → hybrid Braille/Block fusion → 60 FPS event horizon HUD → supernova credits. | 686 | 50 ms | 52×14 | `plugins/catalog/cosmic-singularity` |
 | `event_horizon` | Kerr black hole with gravitational lensing, Doppler-boosted accretion disk, photon ring, and deflected starfield. | 60 | 50 ms | 48×13 | `plugins/catalog/event-horizon` |
 | `pulsar_core` | Magnetized rotating neutron star with sweeping synchrotron radiation jets and dipole field loops. | 60 | 50 ms | 48×13 | `plugins/catalog/pulsar-core` |
 | `voyager_last_transmission` | The final transmission of Voyager 1: 47 years, 24.3 billion km, one last sign-off. | 322 | 65 ms | 104×1 | `plugins/catalog/voyager-last-transmission` |

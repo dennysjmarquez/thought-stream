@@ -1,4 +1,4 @@
-/*! thought-stream v1.0.0-rc.3 | (c) 2026 Dennys José Márquez Reyes | https://github.com/dennysjmarquez/thought-stream | see LICENSE */
+/*! thought-stream v1.0.0-rc.4 | (c) 2026 Dennys José Márquez Reyes | https://github.com/dennysjmarquez/thought-stream | see LICENSE */
 /**
  * ThoughtStream — TypeScript declarations.
  *
@@ -152,6 +152,7 @@ declare namespace ThoughtStream {
     | 'conformal_coverage'
     | 'conformal_set'
     | 'context_window'
+    | 'cosmic_singularity'
     | 'countdown2'
     | 'cpu_cores'
     | 'cpu_spike'
@@ -549,6 +550,8 @@ declare namespace ThoughtStream {
   }
   interface RandomOptions {
     interval?: number;
+    hold?: number;
+    pauseAfter?: number;
     category?: PluginCategory;
     plugins?: PluginName[];
     filter?: (name: string, plugin: PluginDefinition) => boolean;
