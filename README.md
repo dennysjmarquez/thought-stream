@@ -2,7 +2,7 @@
 
 <p align="center">
   <strong>Text animations in ASCII, ANSI, Unicode and Braille — for terminals and browsers, with one API and one plugin format.</strong><br>
-  259+ ready-made animations. Zero dependencies. Write your own plugin in five lines.
+  250+ ready-made animations. Zero dependencies. Write your own plugin in five lines.
 </p>
 
 <p align="center">
@@ -56,7 +56,7 @@ new ThoughtStream('#status').start('pacman');
 ## Why ThoughtStream
 
 - **One engine, two worlds.** The same API draws into a Node.js terminal (`process.stdout`) and into any DOM element, from plain HTML to React, Vue and Angular.
-- **259 plugins in 13 categories** — classic spinners, AI and machine-learning visualisations, terminal effects, algorithms, nature, physics, space, retro art. Every plugin is its own file, so you ship only what you use. Browse them all in the [catalog](https://github.com/dennysjmarquez/thought-stream/blob/main/docs/catalog.md).
+- **250+ plugins in 13 categories** — classic spinners, AI and machine-learning visualisations, terminal effects, algorithms, nature, physics, space, retro art. Every plugin is its own file, so you ship only what you use. Browse them all in the [catalog](https://github.com/dennysjmarquez/thought-stream/blob/main/docs/catalog.md).
 - **Pixel art made of characters.** Built-in Braille (2×4 dots per character) and half-block (1×2 pixels per character) canvases, with true-colour output. In the browser, dense scenes and ANSI art are painted on a real `<canvas>`; ANSI art is drawn glyph by glyph, so it looks the same in every browser and font.
 - **Plays Durdraw animations.** Drop in a `.dur` file made with [Durdraw](https://durdraw.org/) and it becomes a plugin like any other — see [Playing third-party art](#playing-third-party-art-durdraw).
 - **Plugins are tiny.** An animation is an array of strings. When you need more, it can be a function that receives your parameters, or a multitrack timeline.
@@ -316,7 +316,7 @@ Generator plugins take sizing and palette parameters. The same call works for ev
 </script>
 ```
 
-The parameters apply to the first pass. In v2.0 a generator is rebuilt with **empty** parameters each time the animation loops, so a parameterised scene such as this one returns to its defaults on the second pass. To keep your parameters on every loop, register a copy that builds its frames once:
+The parameters apply to the first pass. In the current release a generator is rebuilt with **empty** parameters each time the animation loops, so a parameterised scene such as this one returns to its defaults on the second pass. To keep your parameters on every loop, register a copy that builds its frames once:
 
 <!-- test:keep-params -->
 ```js
@@ -429,7 +429,7 @@ hold time of the piece.
 
 A piece nobody touched plays at the speed its author chose: that is **1x**, the plugin's `interval` (or 62.5 ms if it
 declares none). From there the speed is a multiplier: 2x is twice as slow, 0.5x twice as fast, and the proportions are kept
-— a hold 15x longer than another stays 15x longer. 55 of the 257 bundled pieces carry their own per-frame timings (most of
+— a hold 15x longer than another stays 15x longer. Many bundled pieces carry their own per-frame timings (most of
 them imported from Durdraw, which writes a pause into every frame).
 
 `pause` and `interval` behave identically — use `interval` for rhythm and `pause` for a deliberate hold (for example the last frame before the loop restarts).
@@ -442,7 +442,7 @@ time (ms)  0     100    200          500    600    2100
            100    100    300          100    1500
 ```
 
-> **Heads-up (v2.0).** The drift correction described below also reacts to a *deliberate* change of hold time: a frame that follows a **shorter** one is held for about `2 × its delay − the previous hold`. The example above really plays as 100, 100, **500**, 100, **2900** ms. Neighbouring frames with the **same** delay are exact, so when timing matters, express a long hold as several identical frames. Identical consecutive frames are not redrawn, so nothing flickers:
+> **Heads-up.** The drift correction described below also reacts to a *deliberate* change of hold time: a frame that follows a **shorter** one is held for about `2 × its delay − the previous hold`. The example above really plays as 100, 100, **500**, 100, **2900** ms. Neighbouring frames with the **same** delay are exact, so when timing matters, express a long hold as several identical frames. Identical consecutive frames are not redrawn, so nothing flickers:
 
 <!-- test:timing-hold -->
 ```js
@@ -641,7 +641,7 @@ new ThoughtStream(process.stdout).start('countdown', { from: 3 });
 
 The function runs when the stream starts, with the parameters given to `start()`. Give `opts` a default (`opts = {}`): tools such as `ThoughtStream.info()` may call a generator without arguments. Runnable: [`03-generator.js`](https://github.com/dennysjmarquez/thought-stream/blob/main/examples/plugins/03-generator.js).
 
-**Keep `cache: true` on a generator that has parameters.** With `cache: true` the frames are built once, so your parameters hold on every loop, and heavy generators cost nothing after the first pass. Without it, v2.0 calls the function again at each loop with *empty* parameters. That is the right choice only when you want fresh random frames on every pass; if you need that *and* parameters, remember them per stream:
+**Keep `cache: true` on a generator that has parameters.** With `cache: true` the frames are built once, so your parameters hold on every loop, and heavy generators cost nothing after the first pass. Without it, the engine calls the function again at each loop with *empty* parameters. That is the right choice only when you want fresh random frames on every pass; if you need that *and* parameters, remember them per stream:
 
 <!-- test:weakmap -->
 ```js
@@ -904,7 +904,7 @@ Durdraw is a project we admire — please see [Acknowledgements](#acknowledgemen
 | `start(name \| { name, … }, params?)` | start a plugin; `params` go to the plugin. Throws if the plugin is not registered. Returns the stream |
 | `stop()` | stop; the last frame stays visible |
 | `pause()` · `resume()` · `toggle()` | pause and resume without losing position |
-| `seek(index)` · `prev()` · `next()` | show a specific frame; use after `pause()`. To step forward use `seek(i + 1)`: in v2.0 `next()` on a paused stream keeps showing the same frame |
+| `seek(index)` · `prev()` · `next()` | show a specific frame; use after `pause()`. To step forward use `seek(i + 1)`: in the current release `next()` on a paused stream keeps showing the same frame |
 | `setSpeed(ms)` | change the speed on the fly |
 | `setText(text)` | forward a new text to a plugin that supports it |
 | `setTrack(name, value)` | fill a `{name}` placeholder, live |
@@ -974,7 +974,7 @@ Three things to know. Each escape sequence starts from a clean slate, so combine
 
 ## Known limitations
 
-These are the behaviours of v2.0 that surprise people. Each has a workaround, and each workaround is run by this README's test-suite.
+These are behaviours of the engine that surprise people. Each has a workaround, and each workaround is run by this README's test-suite.
 
 | You will notice | Why | What to do |
 |---|---|---|

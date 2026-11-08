@@ -1,7 +1,7 @@
 {
   "name": "thought-stream",
-  "version": "1.0.0-rc.4",
-  "description": "259+ ready-made text animations in ASCII, ANSI, Unicode and Braille for terminals and browsers. One zero-dependency SDK, one API, and an extensible plugin system.",
+  "version": "1.0.0-rc.5",
+  "description": "250+ ready-made text animations in ASCII, ANSI, Unicode and Braille for terminals and browsers. One zero-dependency SDK, one API, and an extensible plugin system.",
   "type": "commonjs",
   "keywords": [
     "terminal",

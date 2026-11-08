@@ -2,6 +2,22 @@
 
 Every release of thought-stream, newest first. Versions follow [Semantic Versioning](https://semver.org/).
 
+## [1.0.0-rc.5](https://github.com/dennysjmarquez/thought-stream/releases/tag/v1.0.0-rc.5) - 2026-11-08
+
+ThoughtStream 1.0.0-rc.5 — native in-place terminal multiline playback, clean cursor lifecycle, and evergreen documentation floor
+
+This release candidate brings native multiline in-place playback for CLI and terminal output, complete terminal cursor and auto-wrap lifecycle management with graceful exit handlers, and establishes an evergreen documentation policy backed by automated floor verification.
+
+What changed
+
+- In-place terminal multiline rendering: Terminal stream playback (`new ThoughtStream(process.stdout)`) now performs VT100 cursor rewind (`\x1b[<n>A\r`) instead of single-line carriage return. Multiline animations such as `bbs_acid_intro`, `dur_welcome1`, and ASCII/ANSI art compositions update smoothly in place without cascading downward.
+- Clean cursor and terminal lifecycle: The terminal cursor is automatically hidden (`\x1b[?25l`) upon stream playback and cleanly restored (`\x1b[?25h`) when stopped, paused, completed, or destroyed. Handlers on `process.once('SIGINT')`, `SIGTERM`, and `exit` guarantee the cursor and terminal auto-wrap (`\x1b[?7h`) are immediately restored if the user interrupts playback with Ctrl+C.
+- Scroll-freeze and viewport safety: Disabled auto-wrap (`\x1b[?7l`) during active playback prevents wide lines from breaking the terminal grid, and output height is strictly clamped to `rows - 1` to prevent VT100 hardware viewport scrolling when rendering tall ASCII/ANSI art.
+- Dynamic height sweep: Leftover lines from taller preceding frames are erased in place (`\x1b[K`) so variable-height animations transition cleanly without ghost artifacts.
+- Evergreen documentation policy: Public README and package description now advertise an evergreen «250+ ready-made text animations» floor instead of volatile exact counts, backed by an automated tooling guard test (`test/tooling/readme.test.js`) ensuring the catalog count never lies.
+
+This is a pre-release published under the «next» tag: `npm install thought-stream@next` installs it; `npm install thought-stream` keeps waiting for the stable 1.0.0.
+
 ## [1.0.0-rc.4](https://github.com/dennysjmarquez/thought-stream/releases/tag/v1.0.0-rc.4) - 2026-11-07
 
 ThoughtStream 1.0.0-rc.4 — cinematic random mode, OWASP security suite, and the cosmic singularity showcase
