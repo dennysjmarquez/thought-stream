@@ -283,6 +283,15 @@ Importing the engine and the plugins is safe on the server — nothing touches t
 
 ## Using plugins
 
+Every plugin is an animation with its own visual style and timing. Across the 250+ catalog plugins, four implementation patterns cover every animation:
+
+| Pattern | Plugins | Characteristics | Examples |
+|---|---:|---|---|
+| **Plain strings** | 181 | Pure string arrays. Zero allocation, instantaneous rendering. | `pacman`, `matrix_rain`, `dna` |
+| **Frame objects** | 61 | Paced with `{ frame, interval, pause }` for deliberate slowdowns and holds. | `upload`, `flame`, `checkpoint` |
+| **Generator functions** | 15 | Procedural animations computed on the fly from options (`cols`, `rows`, `palette`, `seed`). | `braille_plasma`, `boreal_odyssey` |
+| **Multitrack timelines** | 1 | Orchestrates independent visual tracks, counters, and scenes on a single line. | `chess_checkmate` |
+
 ### Passing parameters
 
 The second argument of `start()` is handed to the plugin. A plugin that is configurable lists its parameters in its `options` field:
@@ -316,6 +325,18 @@ Generator plugins take sizing and palette parameters. The same call works for ev
 </script>
 ```
 
+Common parameters accepted across generator plugins:
+
+| Option | Type / Examples | Used for |
+|---|---|---|
+| `cols`, `rows` | numbers, e.g. `cols: 60, rows: 14` | width in columns and height in terminal lines |
+| `palette` | `'neon'` (default), `'fire'`, `'ocean'`, `'acid'` | color theme for plasmas, fractals and auroras |
+| `colorTheme` | `'golden'`, `'ultraviolet'`, `'crimson'` | color palette for space generators (`event_horizon`) |
+| `speed` | number (ms) | frame duration or playback multiplier |
+| `frames` | number, e.g. `30` | total frames generated in a cycle |
+| `seed` | number, e.g. `1337` | reproducible procedural seed (`boreal_odyssey`) |
+| `threshold` | number 0.0–1.0, default `0.28` | dark void cut threshold (`braille_nebula`) |
+
 The parameters apply to the first pass. In the current release a generator is rebuilt with **empty** parameters each time the animation loops, so a parameterised scene such as this one returns to its defaults on the second pass. To keep your parameters on every loop, register a copy that builds its frames once:
 
 <!-- test:keep-params -->
@@ -334,6 +355,40 @@ new ThoughtStream('#plasma').start('my_plasma', { cols: 60, rows: 14, palette: '
 | a `{placeholder}` inside the frames | `stream.setTrack('label', 'Verifying')` | works on any plugin whose frames contain `{label}`; see [placeholders](#4-placeholders-you-can-update-live) |
 | the speed | `stream.setSpeed(ms)` or `stream.speed = ms` | applies from the next frame |
 | any plugin's own methods | `stream.plugin('name').method(...)` | calls the plugin's `api` |
+
+### Quick text display
+
+When you just want to show a message — no plugin, no `register()` — use `phrase()`. If the text ends in dots, they pulse:
+
+<!-- test:phrase -->
+```js
+const ThoughtStream = require('thought-stream');
+
+const stream = new ThoughtStream(process.stdout);
+stream.phrase('Thinking...');                      // the dots pulse every 400 ms
+// stream.phrase('Connecting...', { dotSpeed: 200 });  // faster pulse
+// stream.phrase('Ready');                             // no dots → static text, no pulse
+
+setTimeout(() => stream.stop(), 3000);
+```
+
+Use `phrase()` for one-off messages. For animated spinners and progress bars, use `start()` with a plugin.
+
+### Playing frames without a plugin
+
+`playCustom()` runs an array of frames without registering a plugin:
+
+<!-- test:play-custom -->
+```js
+const ThoughtStream = require('thought-stream');
+
+const stream = new ThoughtStream(process.stdout);
+stream.playCustom(['⠋ Checking', '⠙ Checking', '⠹ Checking', '⠸ Checking'], 'check', { loop: true });
+
+setTimeout(() => stream.succeed('All good'), 2000);
+```
+
+It is the fastest way to test a frame sequence. For anything you want to reuse or share, `register()` is cleaner.
 
 ### Speed, looping and controls
 
@@ -379,6 +434,20 @@ stream.playlist([
 // stream.startRandom({ category: 'ai-models', interval: 2600, hold: 1000 }); // with visual hold
 ```
 
+`startRandom()` picks a random plugin and switches to the next one after `interval` ms. It never repeats a plugin until every loaded one has played (Fisher-Yates shuffle). `hold` adds a visual pause between transitions. Stop it at any time with `stream.stopRandom()`:
+
+<!-- test:start-random -->
+```js
+const ThoughtStream = require('thought-stream');
+require('thought-stream/plugins/catalog/spinner-dots');
+require('thought-stream/plugins/catalog/pacman');
+
+const stream = new ThoughtStream(process.stdout);
+stream.startRandom({ interval: 2000, hold: 300 });   // rotate every 2 s with a 300 ms visual hold
+
+setTimeout(() => stream.stopRandom(), 8000);         // stop after 8 s
+```
+
 ### Callbacks
 
 Pass them as constructor options:
@@ -396,6 +465,47 @@ const stream = new ThoughtStream(null, {
   onChange:   (name, plugin) => {},           // a different plugin started
 });
 stream.start('spinner_dots');
+```
+
+### Promises and async tasks (Ora compatibility)
+
+Wrap any `Promise` or `async` function with `.promise()`. The stream animates while the task runs, displays a green `✔` on resolve or a red `✖` on reject, and returns the original resolved value:
+
+```js
+const ThoughtStream = require('thought-stream');
+require('thought-stream/plugins/catalog/spinner-dots');
+
+const stream = new ThoughtStream(process.stdout);
+
+// 1. Instance method:
+const user = await stream.promise(fetchUser(), {
+  name: 'spinner_dots',
+  text: 'Loading user profile...',
+  successText: (res) => `Loaded profile for ${res.name}`,
+  failText: (err) => `Failed to load: ${err.message}`,
+});
+
+// 2. Static one-liner on process.stdout:
+await ThoughtStream.promise(downloadArchive(), 'Downloading assets...');
+```
+
+### Status indicators and custom persistence
+
+When an animation finishes, you can freeze it with standard status icons or persist any custom symbol and text to the terminal without clearing:
+
+```js
+stream.succeed('Build completed in 1.4s');           // green ✔ line + newline
+stream.fail('Build failed with exit code 1');         // red ✖ line + newline
+stream.warn('Dependencies out of date');             // yellow ⚠ line + newline
+stream.info('Listening on http://localhost:3000');   // blue ℹ line + newline
+
+// Persist custom symbols (emojis, unicode badges) like ora.stopAndPersist():
+stream.stopAndPersist({ symbol: '🚀', text: 'Service deployed to edge' });
+
+// Live properties and controls:
+stream.text = 'Processing chunk 3/8...';             // update current text dynamically
+stream.color = '#3fb950';                           // colorize whole stream on the fly
+console.log(stream.isSpinning);                      // true while active, false when stopped
 ```
 
 ### Headless mode: bring your own renderer
@@ -514,6 +624,21 @@ const frame = canvas
   .render();
 ```
 
+Or shade cell by cell with `fillDensity((cx, cy, t) => ({ density, color, bg }))` — 8× faster than per-dot loops, mapping a 0–1 density value across 9 canonical Braille glyphs (`⠀` to `⣿`):
+
+<!-- test:braille-density -->
+```js
+const { BrailleCanvas } = ThoughtStream.SDK;
+
+const canvas = BrailleCanvas(40, 8);
+const frame = canvas
+  .fillDensity((cx, cy, t) => ({
+    density: Math.sin(cx / 5 + t) * 0.5 + 0.5,
+    color: '#00ff88',
+  }), 0.5)
+  .render();
+```
+
 Example — a half-block canvas (hex strings, `{ color }` or `null` for empty):
 
 <!-- test:block -->
@@ -578,10 +703,14 @@ To record a video instead, give `canvas.captureStream()` to a [`MediaRecorder`](
 
 A plugin is a plain object passed to `ThoughtStream.register()`. From then on, every stream in your app can start it by name. Put the file wherever you like; it only has to run after the engine has loaded. Every step below has a complete, runnable file in [`examples/`](#learn-by-example).
 
+> **Before you start:** install the library in your project — `npm install thought-stream` — then copy any snippet below, save it as a `.js` file, and run it with `node`.
+
 ### 1. A list of frames
 
 <!-- test:plugin-1 -->
 ```js
+const ThoughtStream = require('thought-stream');
+
 ThoughtStream.register({
   name: 'my_spinner',            // how you start it: stream.start('my_spinner')
   category: 'custom',            // used for filtering, e.g. startRandom({ category })
@@ -592,6 +721,12 @@ ThoughtStream.register({
 
 new ThoughtStream(process.stdout).start('my_spinner');
 ```
+
+Save it as `my-spinner.js` and run `node my-spinner.js` — here's what you'll see:
+
+<p align="center">
+  <img src="https://cdn.jsdelivr.net/gh/dennysjmarquez/thought-stream@main/docs/assets/example-01-list.svg" alt="Terminal preview of my_spinner" width="720">
+</p>
 
 The complete file, with every optional field and a frame of several lines: [`01-list.js`](https://github.com/dennysjmarquez/thought-stream/blob/main/examples/plugins/01-list.js).
 
@@ -613,7 +748,15 @@ ThoughtStream.register({
     { frame: '[##########] done', pause: 1500 },      // hold 1.5 s, then loop
   ],
 });
+
+new ThoughtStream(process.stdout).start('upload');
 ```
+
+Save it as `upload.js` and run `node upload.js` — here's what you'll see:
+
+<p align="center">
+  <img src="https://cdn.jsdelivr.net/gh/dennysjmarquez/thought-stream@main/docs/assets/example-02-timing.svg" alt="Terminal preview of upload" width="720">
+</p>
 
 Runnable, with a way to hold a frame for an exact time: [`02-timing.js`](https://github.com/dennysjmarquez/thought-stream/blob/main/examples/plugins/02-timing.js).
 
@@ -623,6 +766,8 @@ Runnable, with a way to hold a frame for an exact time: [`02-timing.js`](https:/
 
 <!-- test:plugin-3 -->
 ```js
+const ThoughtStream = require('thought-stream');
+
 ThoughtStream.register({
   name: 'countdown',
   category: 'custom',
@@ -639,12 +784,20 @@ ThoughtStream.register({
 new ThoughtStream(process.stdout).start('countdown', { from: 3 });
 ```
 
+Save it as `countdown.js` and run `node countdown.js` — here's what you'll see:
+
+<p align="center">
+  <img src="https://cdn.jsdelivr.net/gh/dennysjmarquez/thought-stream@main/docs/assets/example-03-generator.svg" alt="Terminal preview of countdown" width="720">
+</p>
+
 The function runs when the stream starts, with the parameters given to `start()`. Give `opts` a default (`opts = {}`): tools such as `ThoughtStream.info()` may call a generator without arguments. Runnable: [`03-generator.js`](https://github.com/dennysjmarquez/thought-stream/blob/main/examples/plugins/03-generator.js).
 
 **Keep `cache: true` on a generator that has parameters.** With `cache: true` the frames are built once, so your parameters hold on every loop, and heavy generators cost nothing after the first pass. Without it, the engine calls the function again at each loop with *empty* parameters. That is the right choice only when you want fresh random frames on every pass; if you need that *and* parameters, remember them per stream:
 
 <!-- test:weakmap -->
 ```js
+const ThoughtStream = require('thought-stream');
+
 const remembered = new WeakMap();                    // stream -> the parameters of its start() call
 
 ThoughtStream.register({
@@ -660,19 +813,159 @@ ThoughtStream.register({
 new ThoughtStream(process.stdout).start('fresh_noise', { length: 20 });
 ```
 
+Save it as `fresh-noise.js` and run `node fresh-noise.js` — here's what you'll see:
+
+<p align="center">
+  <img src="https://cdn.jsdelivr.net/gh/dennysjmarquez/thought-stream@main/docs/assets/example-03b-fresh-noise.svg" alt="Terminal preview of fresh_noise" width="720">
+</p>
+
 
 The helpers in `ThoughtStream.SDK` build common frame lists for you:
 
 <!-- test:sdk -->
 ```js
-const { frames, chars, math } = ThoughtStream.SDK;
+const ThoughtStream = require('thought-stream');
+const { frames, chars, string, math } = ThoughtStream.SDK;
 
 frames.progressBar('Uploading', 24, 40);           // 41 frames, 0 % to 100 %:  Uploading [████░░░░░░░░░░░░░░░░░░░░]  17%
 frames.typewriter('Hello, world', '▌', true);      // types the text, then erases it
 frames.dotReveal('Loading', 3);                    // Loading · Loading. · Loading.. · Loading...
-frames.spinner(chars.braille, ' Working');         // any character list plus a suffix
+frames.spinner(chars.moon, ' Moon phases');        // spin using any character set (braille, moon, clock, arrows...)
+frames.gradientPulse(16, 20);                      // 20-frame shimmering intensity pulse
+frames.bounce(['⠋', '⠙', '⠹', '⠸']);              // plays forward, then backward: ⠋ ⠙ ⠹ ⠸ ⠹ ⠙
+string.box('SYSTEM READY');                        // draws an ASCII/Unicode border box around text
+string.padLeft('42%', 6);                          // aligns columns and numbers neatly: "   42%"
 math.sinWave(3, 12, 1);                            // 0..1 value at step 3 of 12 — for smooth pulses
 ```
+
+Here is what the helper animations look like in the terminal:
+
+<p align="center">
+  <img src="https://cdn.jsdelivr.net/gh/dennysjmarquez/thought-stream@main/docs/assets/example-03c-sdk-helpers.svg" alt="Terminal preview of ThoughtStream.SDK helpers" width="720">
+</p>
+
+To combine SDK helpers with your own handmade frames, dynamic parameters, and scenes with `duration`, use `ThoughtStream.compileTracks()`. Notice how each track runs at its own distinct interval so every element moves with its own rhythm:
+
+```js
+const ThoughtStream = require('thought-stream');
+const { frames, chars } = ThoughtStream.SDK;
+
+// 1. Handmade local frames (rising and falling wave)
+const wave = [' ', '▂', '▃', '▄', '▅', '▆', '▇', '█', '█', '▆', '▄', '▂'];
+
+ThoughtStream.register({
+  name: 'mission_control',
+  interval: 80,
+  cache: true,                                         // build the tracks once with the given options
+  frames(opts = {}) {
+    const len = opts.length ?? 12;
+
+    // 2. Combine everything into one multitrack line:
+    return ThoughtStream.compileTracks({
+      template: '{wave}  {spin} {data}  [{time}]',
+      interval: 80,
+      tracks: {
+        wave: { frames: wave, interval: 140 },         // A. Gentle wave at 140 ms
+        spin: { frames: frames.spinner(chars.braille, ''), interval: 80 }, // B. Crisp spinner at 80 ms
+        data: {                                        // C. Telemetry noise at 250 ms
+          frames: Array.from({ length: 4 }, () =>
+            Array.from({ length: len }, () => '░▒▓█'[Math.floor(Math.random() * 4)]).join('')
+          ),
+          interval: 250,
+        },
+        time: { type: 'counter', from: 0, to: 10, interval: 1000, format: 'clock' }, // D. Steady clock at 1000 ms
+      },
+      scenes: [
+        { duration: 4000 },                            // active phase runs for 4 s...
+        { duration: 2000, tracks: { wave: '■', spin: '✔', data: 'SYNC COMPLETE' } }, // ...then settles for 2 s
+      ],
+    });
+  },
+});
+
+new ThoughtStream(process.stdout).start('mission_control', { length: 12 });
+```
+
+Save it as `mission-control.js` and run `node mission-control.js` — here's what you'll see:
+
+<p align="center">
+  <img src="https://cdn.jsdelivr.net/gh/dennysjmarquez/thought-stream@main/docs/assets/example-03d-mission-control.svg" alt="Terminal preview of mission_control" width="720">
+</p>
+
+### Styling, colours, and text formatting
+
+Frames can be richly styled and coloured using `ThoughtStream.SDK.color.paint()`. It works identically in **Node.js terminals** (24-bit TrueColor ANSI codes) and in **browsers** (translated to styled `<span>` tags automatically).
+
+| Option | Values | Meaning |
+|---|---|---|
+| `color` (or `fg`) | `'#00ff88'`, `'#ff5555'`, `'cyan'`, `'red'` | Foreground text colour |
+| `bg` (or `background`) | `'#000000'`, `'#1e1e2e'`, `'black'` | Background colour |
+| `bold` | `true` | Bold / bright text |
+| `dim` | `true` | Faint, dimmed text (useful for labels and secondary details) |
+| `italic` | `true` | Cursive italic text |
+| `underline` | `true` | Underlined text (links, highlights) |
+| `blink` | `true` | Blinking text — classic retro terminal alert (animated via CSS in browsers) |
+| `invert` | `true` | Swaps foreground and background colours (ideal for badges) |
+
+#### Three ways to use colour:
+
+1. **Colour an entire animation:**
+   Transform every frame in one line with `.map()`:
+   ```js
+   const { color } = ThoughtStream.SDK;
+   const frames = ['◐', '◓', '◑', '◒'].map((f) => color.paint(f, { color: '#00ff88', bold: true }));
+   // Or use fast terminal shortcuts: frames.map(color.neon) or frames.map(color.cyan)
+   ```
+
+2. **Compose multi-styled, multicolour lines:**
+   Mix painted tags, dimmed labels, italics, and `string.padLeft` to keep columns aligned:
+
+<!-- test:styling -->
+```js
+const ThoughtStream = require('thought-stream');
+const { color, string } = ThoughtStream.SDK;
+
+const spinner = ['◐', '◓', '◑', '◒'].map((f) =>
+  color.paint(f, { color: '#00ff88', bold: true })
+);
+
+ThoughtStream.register({
+  name: 'server_monitor',
+  interval: 120,
+  defaultFg: 248,                                        // default colour for unpainted text
+  frames: spinner.map((icon, i) => {
+    const badge = color.paint('[PROD]', { color: '#a855f7', bold: true });
+    const label = color.paint('CPU', { dim: true });
+    const note  = color.paint('(live)', { italic: true, dim: true });
+    const alert = color.paint('ALERT', { color: 'red', bold: true, blink: true });
+    const pct   = string.padLeft((40 + i * 15) + '%', 4);
+    const link  = color.paint('logs', { color: 'cyan', underline: true });
+
+    return `${icon} ${badge} ${label} ${pct}  ${note}  ${i === 3 ? alert : link}`;
+  }),
+});
+
+new ThoughtStream(process.stdout).start('server_monitor');
+```
+
+Save it as `server-monitor.js` and run `node server-monitor.js` — here's what you'll see:
+
+<p align="center">
+  <img src="https://cdn.jsdelivr.net/gh/dennysjmarquez/thought-stream@main/docs/assets/example-03e-styling.svg" alt="Terminal preview of server_monitor" width="720">
+</p>
+
+3. **Pre-coloured animations & forcing a monochrome palette:**
+   - **Catalog & Durdraw plugins:** Built-in ANSI colours are rendered automatically everywhere.
+   - **Forcing a single colour:** To tint an existing multi-coloured plugin into monochrome, strip existing ANSI codes first:
+     ```js
+     const base = ThoughtStream.get('spinner_dots');
+     const stripAnsi = (s) => s.replace(/\x1b\[[0-9;]*m/g, '');
+     const monoFrames = base.frames.map((f) => color.paint(stripAnsi(f), { color: '#00ff88' }));
+     ```
+   - **In the browser with CSS:** Uncoloured text inherits the container's CSS `color`. To override all embedded colours:
+     ```css
+     #status, #status span { color: #f59e0b !important; }
+     ```
 
 ### 4. Placeholders you can update live
 
@@ -680,6 +973,8 @@ Put `{names}` in the frames, then fill them while the animation runs with `setTr
 
 <!-- test:plugin-4 -->
 ```js
+const ThoughtStream = require('thought-stream');
+
 ThoughtStream.register({
   name: 'status',
   interval: 90,
@@ -693,7 +988,72 @@ stream.start('status');
 setTimeout(() => stream.setTrack('label', 'Verifying'), 2000);
 ```
 
+Save it as `upload-status.js` and run `node upload-status.js` — here's what you'll see:
+
+<p align="center">
+  <img src="https://cdn.jsdelivr.net/gh/dennysjmarquez/thought-stream@main/docs/assets/example-04-placeholders.svg" alt="Terminal preview of status" width="720">
+</p>
+
 Placeholders also work inside frame objects (`{ frame: 'Uploading {label}', interval: 200 }`), but then add `multitrack: false` to the plugin. Otherwise the engine takes it for a multitrack template and logs an *Unmapped template placeholders* warning. Runnable: [`04-placeholders.js`](https://github.com/dennysjmarquez/thought-stream/blob/main/examples/plugins/04-placeholders.js). To give a plugin methods of its own, such as `stream.plugin('gauge').setLevel(60)`, see [`06-api.js`](https://github.com/dennysjmarquez/thought-stream/blob/main/examples/plugins/06-api.js).
+
+### Multi-line dashboards: composing multiple animations
+
+The terminal window at the top of this page is not a static mockup — it is four real ThoughtStream plugins running simultaneously. Because `ThoughtStream` natively supports multiline frames (`\n`), it rewinds the cursor (`\x1b[NA\r`) and updates all lines in place without flicker.
+
+Here is the exact code that drives the 4-row dashboard:
+
+```js
+const ThoughtStream = require('thought-stream');
+const { color } = ThoughtStream.SDK;
+
+// Load the 4 catalog plugins
+require('thought-stream/plugins/catalog/tokenizer');
+require('thought-stream/plugins/catalog/flash-attention');
+require('thought-stream/plugins/catalog/wandb-sparkline');
+require('thought-stream/plugins/catalog/kv-cache');
+
+const pTokenizer = ThoughtStream.get('tokenizer');
+const pAttention = ThoughtStream.get('flash_attention');
+const pSparkline = ThoughtStream.get('wandb_sparkline');
+const pKvCache   = ThoughtStream.get('kv_cache');
+
+const f1 = typeof pTokenizer.frames === 'function' ? pTokenizer.frames() : pTokenizer.frames;
+const f2 = typeof pAttention.frames === 'function' ? pAttention.frames() : pAttention.frames;
+const f3 = typeof pSparkline.frames === 'function' ? pSparkline.frames() : pSparkline.frames;
+const f4 = typeof pKvCache.frames   === 'function' ? pKvCache.frames()   : pKvCache.frames;
+
+ThoughtStream.register({
+  name: 'hero_dashboard',
+  interval: 65,
+  frames() {
+    const combined = [];
+    const WIDTH = 68;
+    for (let i = 0; i < 60; i++) {
+      const r1 = (f1[i % f1.length].frame || f1[i % f1.length]).slice(0, 48);
+      const r2 = (f2[i % f2.length].frame || f2[i % f2.length]).slice(0, 48);
+      const r3 = (f3[i % f3.length].frame || f3[i % f3.length]).slice(0, 48);
+      const r4 = (f4[i % f4.length].frame || f4[i % f4.length]).slice(0, 48);
+
+      const l1 = color.paint(r1, { fg: '#79c0ff' }) + ' '.repeat(Math.max(2, WIDTH - r1.length - 9)) + color.paint('tokenizer', { dim: true });
+      const l2 = r2 + ' '.repeat(Math.max(2, WIDTH - r2.length - 15)) + color.paint('flash_attention', { dim: true });
+      const l3 = color.paint(r3, { fg: '#56d364' }) + ' '.repeat(Math.max(2, WIDTH - r3.length - 15)) + color.paint('wandb_sparkline', { dim: true });
+      const l4 = color.paint(r4, { fg: '#e3b341' }) + ' '.repeat(Math.max(2, WIDTH - r4.length - 8)) + color.paint('kv_cache', { dim: true });
+
+      combined.push(l1 + '\n' + l2 + '\n' + l3 + '\n' + l4);
+    }
+    return combined;
+  }
+});
+
+const stream = new ThoughtStream(process.stdout);
+stream.start('hero_dashboard');
+```
+
+Save it as `dashboard.js` and run `node dashboard.js` — here's what you'll see:
+
+<p align="center">
+  <img src="https://cdn.jsdelivr.net/gh/dennysjmarquez/thought-stream@main/docs/assets/hero.svg" alt="A terminal window animating four ThoughtStream plugins at once: a tokenizer, an attention progress bar, a loss sparkline and a KV-cache gauge" width="720">
+</p>
 
 ### 5. Pixel art
 
@@ -739,7 +1099,15 @@ ThoughtStream.register({
       }).render());
   },
 });
+
+new ThoughtStream(process.stdout).start('sine_scope');
 ```
+
+Save it as `sine-scope.js` and run `node sine-scope.js` — here's what you'll see:
+
+<p align="center">
+  <img src="https://cdn.jsdelivr.net/gh/dennysjmarquez/thought-stream@main/docs/assets/example-05-pixel.svg" alt="Terminal preview of sine_scope" width="720">
+</p>
 
 Runnable: [`15-braille.js`](https://github.com/dennysjmarquez/thought-stream/blob/main/examples/plugins/15-braille.js) (three ways to draw with dots) and [`16-block.js`](https://github.com/dennysjmarquez/thought-stream/blob/main/examples/plugins/16-block.js) (pixels, mirrors and pictures from a list of colours).
 
@@ -749,6 +1117,8 @@ When several things must move at different speeds on one line — a spinner, a c
 
 <!-- test:plugin-6 -->
 ```js
+const ThoughtStream = require('thought-stream');
+
 ThoughtStream.register({
   name: 'deploy',
   category: 'custom',
@@ -763,9 +1133,80 @@ ThoughtStream.register({
     { pause: 1500, tracks: { spin: '✔', pct: 100 } },         // …then a closing scene holds for 1.5 s
   ],
 });
+
+new ThoughtStream(process.stdout).start('deploy');
 ```
 
+Save it as `deploy.js` and run `node deploy.js` — here's what you'll see:
+
+<p align="center">
+  <img src="https://cdn.jsdelivr.net/gh/dennysjmarquez/thought-stream@main/docs/assets/example-06-multitrack.svg" alt="Terminal preview of deploy" width="720">
+</p>
+
 Track types, scenes and timing are covered in [docs/multitrack.md](https://github.com/dennysjmarquez/thought-stream/blob/main/docs/multitrack.md). Runnable: [`05-tracks.js`](https://github.com/dennysjmarquez/thought-stream/blob/main/examples/plugins/05-tracks.js).
+
+#### `duration` vs `pause` in scenes
+
+Both look similar but do different things:
+
+| Field | What it does | Practical meaning |
+|---|---|---|
+| `duration` | How long the scene **runs** — ticks advance, tracks animate | "play this phase for 4 s" |
+| `pause` | How long the **last frame is frozen** after the scene ends | "hold the closing message for 1.5 s before looping" |
+
+A scene with only `pause` runs for exactly one tick, then holds. A scene with both runs for `duration` ms and then holds for an extra `pause` ms. The `deploy` example above uses both: the first scene runs for 6 s, the second runs for one tick (showing `✔ 100%`) and then holds for 1.5 s.
+
+`pause` also exists on a **frame object** (`{ frame: 'done', pause: 1500 }`), where it means the same as `interval` — it sets how long that one frame stays on screen. Use `pause` there to signal intent ("this is a deliberate hold"), `interval` for rhythm.
+
+#### Track options: `mode` and `delay`
+
+A frame-sequence track has two options that are not visible in the main example:
+
+| Option | Default | What it does |
+|---|---|---|
+| `mode: 'loop'` | default | the track loops back to the first frame when it reaches the end |
+| `mode: 'once'` | — | the track **stops on its last frame** and stays there while the other tracks keep running |
+| `delay` | `0` | ms to wait before this track starts; the other tracks are already running during that time |
+
+`mode: 'once'` is how you "freeze one track while the others continue" — for example a countdown that stops at zero while the spinner keeps spinning:
+
+<!-- test:track-options -->
+```js
+const ThoughtStream = require('thought-stream');
+
+ThoughtStream.register({
+  name: 'handshake',
+  interval: 100,
+  template: '{spin} {step}',
+  tracks: {
+    spin: { frames: ['⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧'], interval: 80 },     // loops forever
+    step: { frames: ['Connecting', 'Authenticating', 'Ready'], interval: 600, mode: 'once' }, // stops at 'Ready'
+  },
+  scenes: [{ duration: 6000 }],
+});
+
+new ThoughtStream(process.stdout).start('handshake');
+```
+
+`delay` lets a track enter late — for example a label that appears after a spinner has been running for a moment:
+
+<!-- test:track-delay -->
+```js
+const ThoughtStream = require('thought-stream');
+
+ThoughtStream.register({
+  name: 'staged',
+  interval: 80,
+  template: '{spin}{label}',
+  tracks: {
+    spin: { frames: ['⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧'], interval: 80 },
+    label: { frames: ['', ' Loading…'], interval: 80, delay: 500, mode: 'once' },   // appears after 500 ms
+  },
+  scenes: [{ duration: 2000 }],
+});
+
+new ThoughtStream(process.stdout).start('staged');
+```
 
 ### Where plugin files live
 

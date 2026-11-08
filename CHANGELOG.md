@@ -2,6 +2,29 @@
 
 Every release of thought-stream, newest first. Versions follow [Semantic Versioning](https://semver.org/).
 
+## [1.0.0](https://github.com/dennysjmarquez/thought-stream/releases/tag/v1.0.0) - 2026-11-08
+
+ThoughtStream 1.0.0 — zero-dependency text animations, multi-line terminal dashboards, and modern CLI workflows
+
+ThoughtStream 1.0.0 marks the first official stable release of the zero-dependency, isomorphic text animation engine for Node.js and the browser.
+
+Highlights of 1.0.0
+
+- Zero runtime dependencies: The core engine and all 258+ catalog animations run purely on standard ECMAScript, Node.js streams, and browser DOM/Canvas with zero third-party dependencies.
+- Multi-line in-place terminal playback: Native VT100 cursor rewind (`\x1b[<n>A\r`) and auto-wrap management allow multi-line dashboards and stacked ASCII/ANSI animations without flickering or downward cascading.
+- Modern CLI & Ora compatibility: Drop-in helpers (`.promise()`, `.stopAndPersist()`, `stream.text`, `stream.color`, `stream.isSpinning`, and status icons `✔`, `✖`, `⚠`, `ℹ`) enable seamless async task tracking and spinner replacement in command-line applications.
+- Multitrack timeline engine: Declarative timelines, independent track intervals, lifecycle transitions (`mode: 'once'`, delays, easing), and template interpolation (`{spinner} {label}`).
+- Sub-pixel graphics SDK: 2D canvas primitives for Braille (`BrailleCanvas`), half-blocks (`BlockCanvas`), Floyd-Steinberg and Bayer dithering, RGB/ANSI color painting, and CP437 box drawing.
+- Clean terminal lifecycle & crash safety: Automatic cursor hiding/restoration (`\x1b[?25l` / `\x1b[?25h]`), auto-wrap safety (`\x1b[?7l`), and guaranteed terminal teardown on `SIGINT`, `SIGTERM`, and normal exit.
+- OWASP security compliance: 12 automated checks guarding against XSS, prototype pollution, ReDoS, memory leaks, and third-party supply-chain bloat.
+- Fully typed & framework agnostic: TypeScript declarations with tested zero-setup integration for React, Vue, Angular, CommonJS, and ES Modules.
+
+Installation
+
+    npm install thought-stream
+
+This is the first general-availability release under the «latest» tag: `npm install thought-stream` installs 1.0.0.
+
 ## [1.0.0-rc.5](https://github.com/dennysjmarquez/thought-stream/releases/tag/v1.0.0-rc.5) - 2026-11-08
 
 ThoughtStream 1.0.0-rc.5 — native in-place terminal multiline playback, clean cursor lifecycle, and evergreen documentation floor

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 120" width="720" height="120" role="img" aria-label="ThoughtStream my_spinner · 120 ms animation in terminal" xml:space="preserve" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', 'DejaVu Sans Mono', monospace" font-size="16">
+<rect width="720" height="120" rx="10" fill="#0d1117"/><rect width="720" height="34" rx="10" fill="#161b22"/><rect y="24" width="720" height="10" fill="#161b22"/>
+<circle cx="22" cy="17" r="5" fill="#ff5f56"/><circle cx="38" cy="17" r="5" fill="#ffbd2e"/><circle cx="54" cy="17" r="5" fill="#27c93f"/>
+<text x="360" y="22" text-anchor="middle" fill="#8b949e" font-size="12">node my-spinner.js</text>
+<text x="28" y="60" fill="#3fb950">$</text><text x="48" y="60" fill="#c9d1d9">node my-spinner.js</text>
+<text x="28" y="94" fill="#58a6ff" font-size="16" opacity="1"><tspan>◐</tspan><animate attributeName="opacity" calcMode="discrete" dur="0.48s" repeatCount="indefinite" keyTimes="0;0.25000;1" values="1;0;0"/></text>
+<text x="28" y="94" fill="#58a6ff" font-size="16" opacity="0"><tspan>◓</tspan><animate attributeName="opacity" calcMode="discrete" dur="0.48s" repeatCount="indefinite" keyTimes="0;0.25000;0.50000;1" values="0;1;0;0"/></text>
+<text x="28" y="94" fill="#58a6ff" font-size="16" opacity="0"><tspan>◑</tspan><animate attributeName="opacity" calcMode="discrete" dur="0.48s" repeatCount="indefinite" keyTimes="0;0.50000;0.75000;1" values="0;1;0;0"/></text>
+<text x="28" y="94" fill="#58a6ff" font-size="16" opacity="0"><tspan>◒</tspan><animate attributeName="opacity" calcMode="discrete" dur="0.48s" repeatCount="indefinite" keyTimes="0;0.75000;1" values="0;1;0"/></text>
+<text x="692" y="94" text-anchor="end" fill="#6e7681" font-size="13">my_spinner · 120 ms</text>
+</svg>
