@@ -2,6 +2,25 @@
 
 Every release of thought-stream, newest first. Versions follow [Semantic Versioning](https://semver.org/).
 
+## [1.0.1](https://github.com/dennysjmarquez/thought-stream/releases/tag/v1.0.1) - 2026-11-08
+
+ThoughtStream 1.0.1 — precision clock drift compensation, persistent generator parameters, and expanded TypeScript typings
+
+ThoughtStream 1.0.1 is a patch release focusing on engine precision, generator option lifecycle, and TypeScript definitions.
+
+Highlights of 1.0.1
+
+- Precision clock drift compensation: Replaced the previous interval drift calculation with a monotonic relative-delay model (`_lastFrameDelay`). Consecutive frames with varying hold times (e.g., jumping from 100 ms to 300 ms or long pauses) now hold for their exact nominal duration without compounding backward delay.
+- Clock state resets: Added clean clock state resets across `pause()`, `resume()`, `seek()`, and runtime speed changes (`setSpeed()`), eliminating artificial lag accumulation when resuming from long pauses or jumping frames.
+- Persistent generator parameters across loops: Parameterized generators (`plugin.frames(opts, stream)`) now retain their normalized options on every loop pass without requiring `cache: true`, while ensuring strict per-instance isolation between concurrent streams.
+- Full TypeScript declaration coverage: Added missing public typings in `dist/index.d.ts` and `dist/index.d.mts` for `promise()`, `stopAndPersist()`, `isSpinning`, `isRunning`, `color`, `text`, `prefixText`, `suffixText`, `clear()`, `render()`, and `frame()`.
+- Generic `PromiseOptions<T>`: `PromiseOptions<T = any>` now automatically infers the resolved type in `successText?: string | ((result: T) => string)`.
+- Documentation corrections: Removed outdated limitations regarding generator parameter looping and terminal multiline rewind.
+
+Installation
+
+    npm install thought-stream@1.0.1
+
 ## [1.0.0](https://github.com/dennysjmarquez/thought-stream/releases/tag/v1.0.0) - 2026-11-08
 
 ThoughtStream 1.0.0 — zero-dependency text animations, multi-line terminal dashboards, and modern CLI workflows

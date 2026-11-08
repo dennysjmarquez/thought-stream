@@ -552,7 +552,7 @@ time (ms)  0     100    200          500    600    2100
            100    100    300          100    1500
 ```
 
-> **Heads-up.** The drift correction described below also reacts to a *deliberate* change of hold time: a frame that follows a **shorter** one is held for about `2 × its delay − the previous hold`. The example above really plays as 100, 100, **500**, 100, **2900** ms. Neighbouring frames with the **same** delay are exact, so when timing matters, express a long hold as several identical frames. Identical consecutive frames are not redrawn, so nothing flickers:
+> **Tip.** Frame durations can be specified directly via `{ frame: 'C', interval: 300 }` or `{ frame: 'E', pause: 1500 }`. Alternatively, for quantised step-based animations, you can express a long hold as several identical frames. Identical consecutive frames are not redrawn, so nothing flickers:
 
 <!-- test:timing-hold -->
 ```js
@@ -567,7 +567,7 @@ ThoughtStream.register({
 How the clock behaves:
 
 - **One timer chain, drift-compensated.** If a tick fires late, the next one is shortened by the same amount, so the average rhythm stays true. A hold time is never compressed below half its length or below 16 ms (about 60 fps), and a stall longer than one frame is forgotten rather than "caught up".
-- **Looping.** When the last frame is reached the animation wraps. A generator plugin is called again at each loop, with empty parameters, unless it declares `cache: true` (see [Generated frames and parameters](#3-generated-frames-and-parameters)). With `loop: false` the stream stops and calls `onComplete`.
+- **Looping.** When the last frame is reached the animation wraps. A generator plugin is called again at each loop with the initial parameters, unless it declares `cache: true` (see [Generated frames and parameters](#3-generated-frames-and-parameters)). With `loop: false` the stream stops and calls `onComplete`.
 - **Automatic pausing.** The clock stops while the tab is hidden and while the element is scrolled out of view, and resumes by itself. With `prefers-reduced-motion: reduce` a single static frame is drawn — the plugin's `preview` if it has one, otherwise its last frame — and nothing moves.
 
 ## Pixel art in text: Braille and half-blocks
@@ -792,7 +792,7 @@ Save it as `countdown.js` and run `node countdown.js` — here's what you'll see
 
 The function runs when the stream starts, with the parameters given to `start()`. Give `opts` a default (`opts = {}`): tools such as `ThoughtStream.info()` may call a generator without arguments. Runnable: [`03-generator.js`](https://github.com/dennysjmarquez/thought-stream/blob/main/examples/plugins/03-generator.js).
 
-**Keep `cache: true` on a generator that has parameters.** With `cache: true` the frames are built once, so your parameters hold on every loop, and heavy generators cost nothing after the first pass. Without it, the engine calls the function again at each loop with *empty* parameters. That is the right choice only when you want fresh random frames on every pass; if you need that *and* parameters, remember them per stream:
+**Keep `cache: true` on a generator that has heavy frames.** With `cache: true` the frames are built once, so your parameters hold on every loop, and heavy generators cost nothing after the first pass. Without it, the engine calls the function again at each loop with the initial parameters. That is the right choice when you want fresh random frames on every pass; if you need to remember custom dynamic state per stream:
 
 <!-- test:weakmap -->
 ```js
@@ -1419,16 +1419,13 @@ These are behaviours of the engine that surprise people. Each has a workaround, 
 
 | You will notice | Why | What to do |
 |---|---|---|
-| A parameterised generator returns to its defaults on the second pass | the engine rebuilds generators with empty parameters at each loop | add `cache: true` — see [Generated frames and parameters](#3-generated-frames-and-parameters); for a catalog plugin, register a cached copy — see [Using plugins](#using-plugins) |
-| A frame after a shorter one is held too long | the drift correction misreads a deliberate change of delay | keep neighbouring delays equal; build long holds from identical frames — see [The timing model](#the-timing-model) |
 | `next()` keeps showing the same frame on a paused stream | `next()` shows the following frame without moving the position | step with `seek(i + 1)` |
-| A multi-line plugin scrolls in the terminal | in Node every frame is written as `\r`, clear-line, then the frame; a frame that contains line breaks therefore stacks | use the browser, or draw it yourself in headless mode (below) |
 | A very wide plugin wraps in a narrow terminal | the engine does not clip frames to the terminal width | check the *Size* column of the [catalog](https://github.com/dennysjmarquez/thought-stream/blob/main/docs/catalog.md), or choose a narrower plugin |
 | `DiffCanvas` draws gaps and stray characters when it is given `BlockCanvas` frames | `BlockCanvas` writes one colour code for a whole run of equal cells, while `DiffCanvas` expects one code per cell | use `DiffCanvas` with `BrailleCanvas` frames, with or without colour: [`17-diff.js`](https://github.com/dennysjmarquez/thought-stream/blob/main/examples/plugins/17-diff.js) |
 | `dither.floydSteinberg` without a palette, and `fromPixels` with `dither: true`, turn white and other very bright colours black | the default quantiser rounds a colour channel of 240 or more (counting the error it carries over from its neighbours) up to 256, which wraps to 0; `fromPixels` snaps to your `palette` first and then dithers without it | call `dither.floydSteinberg(pixels, width, height, palette)` yourself, with a palette, and pass the result to `fromPixels` without `dither`: [`16-block.js`](https://github.com/dennysjmarquez/thought-stream/blob/main/examples/plugins/16-block.js) |
 | `window.mainStream` appears in the browser | every new stream publishes itself under that name | ignore it; it is simply the most recent stream |
 
-**Animating a multi-line frame in place in a terminal** — run the stream headless and move the cursor yourself:
+**Custom multi-line terminal rendering** — in addition to native automatic multiline playback, you can run headless and control cursor placement manually:
 
 <!-- test:multiline-terminal -->
 ```js

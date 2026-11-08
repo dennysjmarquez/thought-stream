@@ -1,4 +1,4 @@
-/*! thought-stream v1.0.0 | (c) 2026 Dennys José Márquez Reyes | https://github.com/dennysjmarquez/thought-stream | see LICENSE */
+/*! thought-stream v1.0.1 | (c) 2026 Dennys José Márquez Reyes | https://github.com/dennysjmarquez/thought-stream | see LICENSE */
 /**
  * ThoughtStream — TypeScript declarations.
  *
@@ -37,6 +37,8 @@ declare class ThoughtStream {
   static importArt(source: ThoughtStream.ArtSource, opts?: ThoughtStream.ImportOptions & { format?: string }): Promise<ThoughtStream.PluginDefinition>;
   /** Turn a multitrack definition (template, tracks, scenes) into plain frames. */
   static compileTracks(plugin: ThoughtStream.PluginDefinition): ThoughtStream.FrameObject[];
+  /** Wrap a Promise or async task with an automatic spinner (Ora compatibility). */
+  static promise<T>(action: Promise<T> | (() => Promise<T>), options?: ThoughtStream.PromiseOptions<T> | string): Promise<T>;
 
   constructor(target?: ThoughtStream.TargetElement, options?: ThoughtStream.ThoughtStreamOptions);
 
@@ -45,10 +47,16 @@ declare class ThoughtStream {
   readonly isPaused: boolean;
   readonly isRandom: boolean;
   readonly isPlaylist: boolean;
+  readonly isSpinning: boolean;
+  readonly isRunning: boolean;
   readonly frameCount: number;
   readonly currentName: string | null;
   loop: boolean;
   speed: number | null;
+  text: string;
+  prefixText: string;
+  suffixText: string;
+  color: string | ThoughtStream.PaintOptions;
 
   /** Start a plugin; `params` go to the plugin. Throws if the plugin is not registered. */
   start(nameOrOptions: ThoughtStream.PluginName | { name: ThoughtStream.PluginName; speed?: number; [key: string]: unknown }, params?: Record<string, any>): this;
@@ -76,6 +84,16 @@ declare class ThoughtStream {
   fail(text?: string): this;
   warn(text?: string): this;
   info(text?: string): this;
+  /** Clear the output line/container without stopping. */
+  clear(): this;
+  /** Re-render the current frame immediately. */
+  render(): this;
+  /** Return the string content of the current frame. */
+  frame(): string;
+  /** Stop the spinner and persist a custom symbol and text (Ora compatibility). */
+  stopAndPersist(options?: ThoughtStream.StopAndPersistOptions): this;
+  /** Run a Promise or async task with automatic spinner management (Ora compatibility). */
+  promise<T>(action: Promise<T> | (() => Promise<T>), options?: ThoughtStream.PromiseOptions<T> | string): Promise<T>;
   /** Play an array of frames that is not a registered plugin. */
   playCustom(frames: ThoughtStream.Frame[], name?: string, opts?: { speed?: number; loop?: boolean }): this;
 
@@ -530,11 +548,31 @@ declare namespace ThoughtStream {
     /** Start random rotation immediately. */
     random?: boolean;
     category?: PluginCategory;
+    color?: string | PaintOptions;
+    prefixText?: string;
+    suffixText?: string;
     onFrame?: (index: number, frame: string, name: string) => void;
     onComplete?: (name: string) => void;
     onLoop?: (name: string) => void;
     onChange?: (name: string, plugin: PluginDefinition) => void;
     onItem?: (item: PlaylistItem, index: number) => void;
+  }
+
+  interface PromiseOptions<T = any> {
+    name?: PluginName;
+    spinner?: PluginName;
+    text?: string;
+    successText?: string | ((result: T) => string);
+    failText?: string | ((err: any) => string);
+    color?: string | PaintOptions;
+    prefixText?: string;
+    suffixText?: string;
+  }
+
+  interface StopAndPersistOptions {
+    symbol?: string;
+    text?: string;
+    prefixText?: string;
   }
 
   interface PlaylistItem {
@@ -692,6 +730,8 @@ export type PluginApi = ThoughtStream.PluginApi;
 export type ArtSource = ThoughtStream.ArtSource;
 export type ImportOptions = ThoughtStream.ImportOptions;
 export type ThoughtStreamOptions = ThoughtStream.ThoughtStreamOptions;
+export type PromiseOptions = ThoughtStream.PromiseOptions;
+export type StopAndPersistOptions = ThoughtStream.StopAndPersistOptions;
 export type PlaylistItem = ThoughtStream.PlaylistItem;
 export type PlaylistOptions = ThoughtStream.PlaylistOptions;
 export type RandomOptions = ThoughtStream.RandomOptions;
