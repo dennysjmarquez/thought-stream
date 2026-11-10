@@ -1,4 +1,4 @@
-/*! thought-stream v1.0.1 | (c) 2026 Dennys José Márquez Reyes | https://github.com/dennysjmarquez/thought-stream | see LICENSE */
+/*! thought-stream v1.1.0 | (c) 2026 Dennys José Márquez Reyes | https://github.com/dennysjmarquez/thought-stream | see LICENSE */
 /**
  * ThoughtStream — TypeScript declarations.
  *
@@ -367,6 +367,8 @@ declare namespace ThoughtStream {
     | 'weather_cycle'
     | 'weight_decay'
     | 'wget_download'
+    | 'whirlwind_warp'
+    | 'whirlwind_warp_blocks'
     | 'wifi_signal'
     | 'wormhole'
     | 'writer_block'
@@ -377,8 +379,8 @@ declare namespace ThoughtStream {
     | 'ai-models'
     | 'algorithms'
     | 'braille'
-    | 'cinema'
     | 'classic'
+    | 'featured'
     | 'fun'
     | 'iconic'
     | 'nature'

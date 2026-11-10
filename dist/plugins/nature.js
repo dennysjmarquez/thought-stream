@@ -17,6 +17,5 @@ require('./catalog/solar-system.js');
 require('./catalog/stars-twinkle.js');
 require('./catalog/supernova.js');
 require('./catalog/time-travel.js');
-require('./catalog/twilight-fjord.js');
 require('./catalog/weather-cycle.js');
 require('./catalog/wormhole.js');

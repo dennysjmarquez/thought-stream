@@ -1,0 +1,12 @@
+'use strict';
+require('./catalog/bbs-acid-intro.js');
+require('./catalog/boreal-odyssey.js');
+require('./catalog/chess-checkmate.js');
+require('./catalog/event-horizon.js');
+require('./catalog/mixture-of-experts.js');
+require('./catalog/norton-surface-scan.js');
+require('./catalog/rlhf-arena.js');
+require('./catalog/twilight-fjord.js');
+require('./catalog/voyager-last-transmission.js');
+require('./catalog/whirlwind-warp.js');
+require('./catalog/whirlwind-warp.js');

@@ -2,6 +2,23 @@
 
 Every release of thought-stream, newest first. Versions follow [Semantic Versioning](https://semver.org/).
 
+## [1.1.0](https://github.com/dennysjmarquez/thought-stream/releases/tag/v1.1.0) - 2026-11-10
+
+ThoughtStream 1.1.0 — multi-category taxonomy, featured showcase collection, and Whirlwind Warp flagship plugin
+
+ThoughtStream 1.1.0 is a minor feature release introducing multi-category taxonomy to the core engine, a curated "featured" showcase collection, and the Whirlwind Warp animation plugin.
+
+Highlights of 1.1.0
+
+- Multi-category plugin taxonomy: The core engine now supports multiple categories per plugin (`category: string | string[]`). `ThoughtStream.info()` exposes both backward-compatible primary `category` (string) and the full `categories` array. `startRandom({ category })` filters across all assigned tags seamlessly.
+- Featured showcase collection: Curated 10 flagship plugins into the new `featured` category (`bbs-acid-intro`, `boreal-odyssey`, `chess-checkmate`, `event-horizon`, `mixture-of-experts`, `norton-surface-scan`, `rlhf-arena`, `twilight-fjord`, `voyager-last-transmission`, and `whirlwind-warp`), highlighted with gold badges in the interactive demo gallery.
+- Whirlwind Warp flagship plugin: Added `whirlwind_warp` and `whirlwind_warp_blocks`, a faithful C-to-JS port of the classic XScreenSaver tunnel animation with dual rendering modes (Braille and half-blocks), responsive container aspect-ratio auto-adaptation, and optimized 5-frame batch pacing for fluid motion.
+- Plugin customization workflow: Documented direct paths to the public GitHub catalog for developers wishing to fork, customize, and register bespoke animations without inspecting local `node_modules`.
+
+Installation
+
+    npm install thought-stream@1.1.0
+
 ## [1.0.1](https://github.com/dennysjmarquez/thought-stream/releases/tag/v1.0.1) - 2026-11-08
 
 ThoughtStream 1.0.1 — precision clock drift compensation, persistent generator parameters, and expanded TypeScript typings

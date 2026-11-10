@@ -703,6 +703,8 @@ To record a video instead, give `canvas.captureStream()` to a [`MediaRecorder`](
 
 A plugin is a plain object passed to `ThoughtStream.register()`. From then on, every stream in your app can start it by name. Put the file wherever you like; it only has to run after the engine has loaded. Every step below has a complete, runnable file in [`examples/`](#learn-by-example).
 
+> **Want to customize an existing plugin?** ThoughtStream is open-source (MIT). Rather than digging through `node_modules`, you can grab any of the 250+ original animation files directly from the public GitHub repository catalog: [`plugins/catalog/`](https://github.com/dennysjmarquez/thought-stream/tree/main/plugins/catalog). Simply download the file into your own project, tweak the frames, labels, colors or timings to your liking, give it your own `name` (e.g. `my_custom_spinner`), and import it into your application.
+
 > **Before you start:** install the library in your project — `npm install thought-stream` — then copy any snippet below, save it as a `.js` file, and run it with `node`.
 
 ### 1. A list of frames

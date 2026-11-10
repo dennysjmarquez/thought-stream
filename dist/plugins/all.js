@@ -253,6 +253,8 @@ require('./catalog/wave.js');
 require('./catalog/weather-cycle.js');
 require('./catalog/weight-decay.js');
 require('./catalog/wget-download.js');
+require('./catalog/whirlwind-warp.js');
+require('./catalog/whirlwind-warp.js');
 require('./catalog/wifi-signal.js');
 require('./catalog/wormhole.js');
 require('./catalog/writer-block.js');

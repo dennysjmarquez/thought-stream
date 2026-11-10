@@ -1,6 +1,6 @@
 # Plugin catalog
 
-Every plugin that ships in the package, generated from the code that is published — 259 plugins in 13 categories.
+Every plugin that ships in the package, generated from the code that is published — 261 plugins in 13 categories.
 
 - **Frames** and **Size** describe the default output (a generator reports what it produces with no options). **Size** is columns × lines of the widest/tallest frame.
 - Wider than 80 columns, or taller than one line, means it is meant for a browser or a roomy terminal; the terminal section of the [README](../README.md) explains what happens in a narrow one.
@@ -8,17 +8,17 @@ Every plugin that ships in the package, generated from the code that is publishe
 
 | Category | Plugins |
 | --- | ---: |
-| [ai-models](#ai-models) | 52 |
+| [ai-models](#ai-models) | 50 |
 | [algorithms](#algorithms) | 7 |
 | [braille](#braille) | 4 |
-| [cinema](#cinema) | 1 |
-| [classic](#classic) | 53 |
+| [classic](#classic) | 51 |
+| [featured](#featured) | 11 |
 | [fun](#fun) | 17 |
 | [iconic](#iconic) | 24 |
-| [nature](#nature) | 21 |
+| [nature](#nature) | 20 |
 | [physics](#physics) | 6 |
-| [retro](#retro) | 20 |
-| [space](#space) | 4 |
+| [retro](#retro) | 19 |
+| [space](#space) | 2 |
 | [terminal-fx](#terminal-fx) | 49 |
 | [text](#text) | 1 |
 
@@ -55,7 +55,6 @@ Every plugin that ships in the package, generated from the code that is publishe
 | `loss_curve` | Curva de entrenamiento convergiendo — loss bajando con barras. | 14 | 150 ms | 32×1 | `plugins/catalog/loss-curve` |
 | `loss_goes_nan` |  | 48 | 62.5 ms | 48×1 | `plugins/catalog/loss-goes-nan` |
 | `mixed_precision` |  | 48 | 62.5 ms | 48×1 | `plugins/catalog/mixed-precision` |
-| `mixture_of_experts` | MoE routing: 4 experts compute in parallel with fluctuating loads. | 166 | 65 ms | 109×1 | `plugins/catalog/mixture-of-experts` |
 | `moe_routing` | Mixture of Experts routing 7 frames | 7 | 80 ms | 33×1 | `plugins/catalog/moe-routing` |
 | `nan_propagation` |  | 48 | 62.5 ms | 48×1 | `plugins/catalog/nan-propagation` |
 | `nccl_allreduce` |  | 48 | 62.5 ms | 48×1 | `plugins/catalog/nccl-allreduce` |
@@ -68,7 +67,6 @@ Every plugin that ships in the package, generated from the code that is publishe
 | `rag_pipeline` | Pipeline RAG: ingestión, chunking, embedding e indexación. | 9 | 180 ms | 31×1 | `plugins/catalog/rag-pipeline` |
 | `rejection_sampling` |  | 64 | 62.5 ms | 48×1 | `plugins/catalog/rejection-sampling` |
 | `reward_model` |  | 60 | 62.5 ms | 8×1 | `plugins/catalog/reward-model` |
-| `rlhf_arena` | RLHF Chatbot Arena: Blind Ingestion -> Streaming -> Human Preference -> DPO Convergence. | 210 | 65 ms | 135×1 | `plugins/catalog/rlhf-arena` |
 | `rlhf_kl` |  | 64 | 62.5 ms | 26×1 | `plugins/catalog/rlhf-kl` |
 | `rope_encoding` | RoPE positional encoding 8 frames | 8 | 100 ms | 17×1 | `plugins/catalog/rope-encoding` |
 | `slurm_queue` |  | 54 | 62.5 ms | 48×1 | `plugins/catalog/slurm-queue` |
@@ -106,14 +104,6 @@ Every plugin that ships in the package, generated from the code that is publishe
 | `braille_nebula` | Sub-pixel cosmic plasma with organic moving voids and glowing Braille stars. | 80 | 42 ms | 48×12 | `plugins/catalog/braille-nebula` |
 | `braille_plasma` | Demo-scene plasma shader rendered as Braille sub-pixel art. 96×48 TrueColor pixels in a 48×12 terminal cell canvas. | 80 | 42 ms | 48×12 | `plugins/catalog/braille-plasma` |
 
-## cinema
-
-`require('thought-stream/plugins/cinema')`
-
-| Name | Description | Frames | Interval | Size | File |
-| --- | --- | ---: | ---: | ---: | --- |
-| `boreal_odyssey` | BOREAL ODYSSEY: a six-act Braille short film (night, aurora, comet, dawn) with letterbox, parallax mountains, lake reflections, dot-font titles and a live HUD. Every run is unique. | 278 | 42 ms | 64×21 | `plugins/catalog/boreal-odyssey` |
-
 ## classic
 
 `require('thought-stream/plugins/classic')`
@@ -134,7 +124,6 @@ Every plugin that ships in the package, generated from the code that is publishe
 | `braille_spin` | Braille spinner clásico 10 frames | 10 | 80 ms | 1×1 | `plugins/catalog/braille-spin` |
 | `braille_wave` | Braille wave 8 frames | 8 | 80 ms | 1×1 | `plugins/catalog/braille-wave` |
 | `breathing` |  | 27 | 62.5 ms | 9×1 | `plugins/catalog/breathing` |
-| `chess_checkmate` | Single-line chess animation with independent rhythms, staggered bursts, holds, tactical discovery and checkmate. | 534 | 65 ms | 132×1 | `plugins/catalog/chess-checkmate` |
 | `circle_spin` | Circle halves spin 4 frames | 4 | 120 ms | 1×1 | `plugins/catalog/circle-spin` |
 | `city_skyline` | A living city at sunset — windows light up, traffic flows, neon signs glow. | 25 | 280 ms | 64×1 | `plugins/catalog/city-skyline` |
 | `clock` |  | 16 | 62.5 ms | 13×1 | `plugins/catalog/clock` |
@@ -146,7 +135,6 @@ Every plugin that ships in the package, generated from the code that is publishe
 | `hourglass` |  | 15 | 62.5 ms | 10×1 | `plugins/catalog/hourglass` |
 | `lava_lamp` | 70s lava lamp — blobs rising, merging, splitting in hypnotic slow motion. | 19 | 400 ms | 37×1 | `plugins/catalog/lava-lamp` |
 | `matrix` |  | 12 | 62.5 ms | 19×1 | `plugins/catalog/matrix` |
-| `norton_surface_scan` | MS-DOS ScanDisk-style linear surface scan. Each loop generates a new disk map, cluster layout and defect distribution. | 55 | 340 ms | 120×1 | `plugins/catalog/norton-surface-scan` |
 | `orbit` |  | 12 | 62.5 ms | 13×1 | `plugins/catalog/orbit` |
 | `orchestra_tuning` | Pre-concert orchestra tuning — sections warm up, A440 alignment, conductor, downbeat. | 21 | 350 ms | 73×1 | `plugins/catalog/orchestra-tuning` |
 | `pendulum` |  | 16 | 62.5 ms | 19×1 | `plugins/catalog/pendulum` |
@@ -173,6 +161,24 @@ Every plugin that ships in the package, generated from the code that is publishe
 | `vinyl_player` | A vinyl record spinning up — needle drops, grooves crackle, music floods in. | 30 | 220 ms | 40×1 | `plugins/catalog/vinyl-player` |
 | `wave` |  | 12 | 62.5 ms | 12×1 | `plugins/catalog/wave` |
 | `wifi_signal` | Señal WiFi creciendo barra a barra hasta cobertura total. | 6 | 200 ms | 19×1 | `plugins/catalog/wifi-signal` |
+
+## featured
+
+`require('thought-stream/plugins/featured')`
+
+| Name | Description | Frames | Interval | Size | File |
+| --- | --- | ---: | ---: | ---: | --- |
+| `bbs_acid_intro` | Authentic 1990s MS-DOS BBS intro screen in vibrant CGA/EGA 16-color ANSI art with cycling palette borders. | 24 | 100 ms | 80×12 | `plugins/catalog/bbs-acid-intro` |
+| `boreal_odyssey` | BOREAL ODYSSEY: a six-act Braille short film (night, aurora, comet, dawn) with letterbox, parallax mountains, lake reflections, dot-font titles and a live HUD. Every run is unique. | 278 | 42 ms | 64×21 | `plugins/catalog/boreal-odyssey` |
+| `chess_checkmate` | Single-line chess animation with independent rhythms, staggered bursts, holds, tactical discovery and checkmate. | 534 | 65 ms | 132×1 | `plugins/catalog/chess-checkmate` |
+| `event_horizon` | Kerr black hole with gravitational lensing, Doppler-boosted accretion disk, photon ring, and deflected starfield. | 60 | 50 ms | 48×13 | `plugins/catalog/event-horizon` |
+| `mixture_of_experts` | MoE routing: 4 experts compute in parallel with fluctuating loads. | 166 | 65 ms | 109×1 | `plugins/catalog/mixture-of-experts` |
+| `norton_surface_scan` | MS-DOS ScanDisk-style linear surface scan. Each loop generates a new disk map, cluster layout and defect distribution. | 55 | 340 ms | 120×1 | `plugins/catalog/norton-surface-scan` |
+| `rlhf_arena` | RLHF Chatbot Arena: Blind Ingestion -> Streaming -> Human Preference -> DPO Convergence. | 210 | 65 ms | 135×1 | `plugins/catalog/rlhf-arena` |
+| `twilight_fjord` | Scandinavian twilight fjord in full-widescreen ultra-high-definition (270×84 micro-pixels): expansive sunset gradient, 3-layer parallax mountains, rocky pine islet, rippling reflections, and migratory cranes. | 36 | 50 ms | 270×42 | `plugins/catalog/twilight-fjord` |
+| `voyager_last_transmission` | The final transmission of Voyager 1: 47 years, 24.3 billion km, one last sign-off. | 322 | 65 ms | 104×1 | `plugins/catalog/voyager-last-transmission` |
+| `whirlwind_warp` | Moving stars acted upon by 16 force fields — faithful JS port of XScreenSaver WhirlwindWarp (Paul 'Joey' Clark). Verified against the original C by a parity test. | 5 | 50 ms | 80×23 | `plugins/catalog/whirlwind-warp` |
+| `whirlwind_warp_blocks` | WhirlWindWarp drawn with solid half-block pixels (one colour per pixel); the browser paints it on a <canvas>. Same simulation as whirlwind_warp. | 5 | 50 ms | 80×23 | `plugins/catalog/whirlwind-warp` |
 
 ## fun
 
@@ -253,7 +259,6 @@ Every plugin that ships in the package, generated from the code that is publishe
 | `stars_twinkle` | Estrellas parpadeando con distintos símbolos Unicode. | 5 | 200 ms | 17×1 | `plugins/catalog/stars-twinkle` |
 | `supernova` | A massive star collapsing and exploding — Type II supernova. | 18 | 300 ms | 43×1 | `plugins/catalog/supernova` |
 | `time_travel` | Reloj viajando en el tiempo 12 frames | 12 | 100 ms | 2×1 | `plugins/catalog/time-travel` |
-| `twilight_fjord` | Scandinavian twilight fjord in full-widescreen ultra-high-definition (270×84 micro-pixels): expansive sunset gradient, 3-layer parallax mountains, rocky pine islet, rippling reflections, and migratory cranes. | 36 | 50 ms | 270×42 | `plugins/catalog/twilight-fjord` |
 | `weather_cycle` | Ciclo meteorológico 16 frames | 16 | 100 ms | 4×1 | `plugins/catalog/weather-cycle` |
 | `wormhole` | Spacetime tunnel — approaching, traversing, emerging on the other side. | 19 | 200 ms | 51×1 | `plugins/catalog/wormhole` |
 
@@ -276,7 +281,6 @@ Every plugin that ships in the package, generated from the code that is publishe
 
 | Name | Description | Frames | Interval | Size | File |
 | --- | --- | ---: | ---: | ---: | --- |
-| `bbs_acid_intro` | Authentic 1990s MS-DOS BBS intro screen in vibrant CGA/EGA 16-color ANSI art with cycling palette borders. | 24 | 100 ms | 80×12 | `plugins/catalog/bbs-acid-intro` |
 | `cm_doge` | Durdraw art (79×23, 4 frames). | 4 | 500 ms | 79×23 | `plugins/catalog/cm-doge` |
 | `cm_eye` | Durdraw art (79×23, 16 frames). | 16 | 100 ms | 79×23 | `plugins/catalog/cm-eye` |
 | `dogeblink` | Durdraw art (80×23, 4 frames). | 4 | 167 ms | 80×23 | `plugins/catalog/dogeblink` |
@@ -304,9 +308,7 @@ Every plugin that ships in the package, generated from the code that is publishe
 | Name | Description | Frames | Interval | Size | File |
 | --- | --- | ---: | ---: | ---: | --- |
 | `cosmic_singularity` | The definitive ThoughtStream showcase: 4-act animation covering all 48 SDK surfaces. Gravitational collapse → hybrid Braille/Block fusion → 60 FPS event horizon HUD → supernova credits. | 686 | 50 ms | 52×14 | `plugins/catalog/cosmic-singularity` |
-| `event_horizon` | Kerr black hole with gravitational lensing, Doppler-boosted accretion disk, photon ring, and deflected starfield. | 60 | 50 ms | 48×13 | `plugins/catalog/event-horizon` |
 | `pulsar_core` | Magnetized rotating neutron star with sweeping synchrotron radiation jets and dipole field loops. | 60 | 50 ms | 48×13 | `plugins/catalog/pulsar-core` |
-| `voyager_last_transmission` | The final transmission of Voyager 1: 47 years, 24.3 billion km, one last sign-off. | 322 | 65 ms | 104×1 | `plugins/catalog/voyager-last-transmission` |
 
 ## terminal-fx
 

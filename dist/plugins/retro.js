@@ -1,5 +1,4 @@
 'use strict';
-require('./catalog/bbs-acid-intro.js');
 require('./catalog/cm-doge.js');
 require('./catalog/cm-eye.js');
 require('./catalog/dogeblink.js');
