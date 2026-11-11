@@ -1,9 +1,12 @@
 {
   "name": "thought-stream",
-  "version": "1.1.0",
-  "description": "250+ ready-made text animations in ASCII, ANSI, Unicode and Braille for terminals and browsers. One zero-dependency SDK, one API, and an extensible plugin system.",
+  "version": "1.1.1",
+  "description": "The zero-dependency animation runtime for apps that think. 270+ text animations in ASCII, ANSI, Unicode and Braille for AI agents, CLIs and browsers.",
   "type": "commonjs",
   "keywords": [
+    "ai-agent",
+    "mcp",
+    "reasoning",
     "terminal",
     "cli",
     "animation",
@@ -29,6 +32,9 @@
     "progress-bar"
   ],
   "license": "MIT",
+  "bin": {
+    "thought-stream": "bin/thought-stream.js"
+  },
   "main": "./dist/thought-stream.js",
   "module": "./dist/thought-stream.mjs",
   "types": "./dist/index.d.ts",
@@ -52,6 +58,7 @@
   },
   "files": [
     "dist",
+    "bin",
     "docs",
     "CHANGELOG.md",
     "THIRD_PARTY_NOTICES.md"

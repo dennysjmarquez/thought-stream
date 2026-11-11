@@ -1,6 +1,6 @@
 # Plugin catalog
 
-Every plugin that ships in the package, generated from the code that is published — 261 plugins in 13 categories.
+Every plugin that ships in the package, generated from the code that is published — 282 plugins in 13 categories.
 
 - **Frames** and **Size** describe the default output (a generator reports what it produces with no options). **Size** is columns × lines of the widest/tallest frame.
 - Wider than 80 columns, or taller than one line, means it is meant for a browser or a roomy terminal; the terminal section of the [README](../README.md) explains what happens in a narrow one.
@@ -8,11 +8,11 @@ Every plugin that ships in the package, generated from the code that is publishe
 
 | Category | Plugins |
 | --- | ---: |
-| [ai-models](#ai-models) | 50 |
+| [ai-models](#ai-models) | 70 |
 | [algorithms](#algorithms) | 7 |
 | [braille](#braille) | 4 |
 | [classic](#classic) | 51 |
-| [featured](#featured) | 11 |
+| [featured](#featured) | 12 |
 | [fun](#fun) | 17 |
 | [iconic](#iconic) | 24 |
 | [nature](#nature) | 20 |
@@ -31,6 +31,7 @@ Every plugin that ships in the package, generated from the code that is publishe
 | `activation_recomp` |  | 48 | 62.5 ms | 48×1 | `plugins/catalog/activation-recomp` |
 | `ai_overthinking` | An AI overthinks a simple "hola" greeting into an unpredictable multi-thousand-dollar existential crisis. | 227 | 65 ms | 142×1 | `plugins/catalog/ai-overthinking` |
 | `ai_thinking` | Robot procesando una petición paso a paso hasta responder. | 8 | 300 ms | 22×1 | `plugins/catalog/ai-thinking` |
+| `ai_thinking_orchestrated` | A cinematic, multi-layered thinking sequence with phases. | 21 | 120 ms | 38×1 | `plugins/catalog/ai-thinking-orchestrated` |
 | `attention_heads` |  | 96 | 62.5 ms | 48×1 | `plugins/catalog/attention-heads` |
 | `beam_search` | Beam search tree exploration 9 frames | 9 | 120 ms | 14×1 | `plugins/catalog/beam-search` |
 | `bpe_merge` |  | 56 | 62.5 ms | 48×1 | `plugins/catalog/bpe-merge` |
@@ -39,6 +40,7 @@ Every plugin that ships in the package, generated from the code that is publishe
 | `checkpoint` |  | 48 | 62.5 ms | 48×1 | `plugins/catalog/checkpoint` |
 | `conformal_coverage` |  | 64 | 62.5 ms | 48×1 | `plugins/catalog/conformal-coverage` |
 | `conformal_set` |  | 48 | 62.5 ms | 48×1 | `plugins/catalog/conformal-set` |
+| `context_compaction` | Context eviction and auto-summarization at memory boundary | 6 | 180 ms | 50×1 | `plugins/catalog/context-compaction` |
 | `context_window` | Context window filling 9 frames | 9 | 80 ms | 23×1 | `plugins/catalog/context-window` |
 | `dataloader` |  | 48 | 62.5 ms | 48×1 | `plugins/catalog/dataloader` |
 | `elo_battle` |  | 64 | 400 ms | 48×1 | `plugins/catalog/elo-battle` |
@@ -47,35 +49,53 @@ Every plugin that ships in the package, generated from the code that is publishe
 | `gpu_util` |  | 48 | 62.5 ms | 48×1 | `plugins/catalog/gpu-util` |
 | `grad_accumulation` |  | 48 | 62.5 ms | 48×1 | `plugins/catalog/grad-accumulation` |
 | `gradient_clipping` |  | 48 | 62.5 ms | 48×1 | `plugins/catalog/gradient-clipping` |
+| `graph_rag_hop` | Multi-hop graph retrieval traversing semantic knowledge triples | 6 | 220 ms | 50×1 | `plugins/catalog/graph-rag-hop` |
+| `guardrail_intercept` | Prompt injection and jailbreak defense barrier with constitutional policy | 6 | 220 ms | 51×1 | `plugins/catalog/guardrail-intercept` |
 | `hallucination_check` |  | 50 | 62.5 ms | 18×1 | `plugins/catalog/hallucination-check` |
+| `human_in_the_loop_gate` | Human-In-The-Loop gate requiring operator cryptographic approval | 3 | 250 ms | 50×3 | `plugins/catalog/human-in-the-loop-gate` |
 | `inference_pipeline` | Pipeline de inferencia: prompt → encode → attention → MLP → output. | 7 | 160 ms | 29×1 | `plugins/catalog/inference-pipeline` |
 | `kv_cache` |  | 48 | 62.5 ms | 48×1 | `plugins/catalog/kv-cache` |
+| `latent_diffusion_denoise` | Reverse diffusion flow: gaussian latent noise transitioning to crisp output | 5 | 150 ms | 53×1 | `plugins/catalog/latent-diffusion-denoise` |
 | `layer_norm` | LayerNorm computation 8 frames | 8 | 80 ms | 21×1 | `plugins/catalog/layer-norm` |
 | `lora_merge` |  | 48 | 62.5 ms | 48×1 | `plugins/catalog/lora-merge` |
 | `loss_curve` | Curva de entrenamiento convergiendo — loss bajando con barras. | 14 | 150 ms | 32×1 | `plugins/catalog/loss-curve` |
 | `loss_goes_nan` |  | 48 | 62.5 ms | 48×1 | `plugins/catalog/loss-goes-nan` |
+| `mcp_handshake` | Model Context Protocol handshake, ping/pong and dynamic tool binding. | 8 | 120 ms | 51×1 | `plugins/catalog/mcp-handshake` |
 | `mixed_precision` |  | 48 | 62.5 ms | 48×1 | `plugins/catalog/mixed-precision` |
 | `moe_routing` | Mixture of Experts routing 7 frames | 7 | 80 ms | 33×1 | `plugins/catalog/moe-routing` |
+| `multi_agent_debate` | Multi-agent adversarial thesis vs antithesis consensus verification | 6 | 260 ms | 58×1 | `plugins/catalog/multi-agent-debate` |
 | `nan_propagation` |  | 48 | 62.5 ms | 48×1 | `plugins/catalog/nan-propagation` |
 | `nccl_allreduce` |  | 48 | 62.5 ms | 48×1 | `plugins/catalog/nccl-allreduce` |
+| `needle_in_haystack` | Needle in a Haystack radar search across 1M+ token context window. | 40 | 150 ms | 49×1 | `plugins/catalog/needle-in-haystack` |
 | `neural_awakening` | A neural network bootstraps from noise — synapses fire, cortex layers come online, identity crystallizes. | 29 | 300 ms | 46×1 | `plugins/catalog/neural-awakening` |
 | `neural_fire` | Red neuronal activándose capa por capa hasta generar el token final. | 11 | 120 ms | 29×1 | `plugins/catalog/neural-fire` |
 | `nucleus_sampling` |  | 48 | 62.5 ms | 48×1 | `plugins/catalog/nucleus-sampling` |
+| `paged_attention` | vLLM-style virtual memory paging for KV-cache without fragmentation | 6 | 180 ms | 50×1 | `plugins/catalog/paged-attention` |
 | `perplexity` |  | 48 | 62.5 ms | 48×1 | `plugins/catalog/perplexity` |
 | `pipeline_parallel` |  | 64 | 62.5 ms | 48×1 | `plugins/catalog/pipeline-parallel` |
+| `prompt_cache_hit` | Prefix prompt caching: instant memory hit saving computation and latency. | 24 | 80 ms | 52×1 | `plugins/catalog/prompt-cache-hit` |
 | `quantization` |  | 56 | 62.5 ms | 42×1 | `plugins/catalog/quantization` |
 | `rag_pipeline` | Pipeline RAG: ingestión, chunking, embedding e indexación. | 9 | 180 ms | 31×1 | `plugins/catalog/rag-pipeline` |
+| `react_agent_loop` | Autonomous ReAct loop: Reasoning, Acting, and Observing with cinematic typewriter pacing. | 211 | 80 ms | 52×1 | `plugins/catalog/react-agent-loop` |
 | `rejection_sampling` |  | 64 | 62.5 ms | 48×1 | `plugins/catalog/rejection-sampling` |
+| `reranker_cross_encoder` | Cross-encoder attention re-ranking candidate documents by relevance | 5 | 180 ms | 61×3 | `plugins/catalog/reranker-cross-encoder` |
 | `reward_model` |  | 60 | 62.5 ms | 8×1 | `plugins/catalog/reward-model` |
 | `rlhf_kl` |  | 64 | 62.5 ms | 26×1 | `plugins/catalog/rlhf-kl` |
 | `rope_encoding` | RoPE positional encoding 8 frames | 8 | 100 ms | 17×1 | `plugins/catalog/rope-encoding` |
+| `self_correction_loop` | Test-time compute verification: draft generation, error catch and patch | 7 | 240 ms | 50×1 | `plugins/catalog/self-correction-loop` |
 | `slurm_queue` |  | 54 | 62.5 ms | 48×1 | `plugins/catalog/slurm-queue` |
 | `softmax_race` |  | 48 | 62.5 ms | 48×1 | `plugins/catalog/softmax-race` |
 | `speculative_decode` | Speculative decoding verify/accept 9 frames | 9 | 100 ms | 17×1 | `plugins/catalog/speculative-decode` |
+| `symphony_thinking` | A polirhythmic multitrack thinking sequence. | 80 | 100 ms | 30×1 | `plugins/catalog/symphony-thinking` |
 | `temperature` |  | 48 | 62.5 ms | 48×1 | `plugins/catalog/temperature` |
 | `token_budget` | Token budget countdown 13 frames | 13 | 100 ms | 25×1 | `plugins/catalog/token-budget` |
+| `token_chunk_stream` | Realistic LLM token streaming with human cadence and dramatic holds | 17 | 120 ms | 93×1 | `plugins/catalog/token-chunk-stream` |
+| `token_entropy_radar` | Token-level entropy and perplexity radar tracking model certainty | 6 | 160 ms | 51×1 | `plugins/catalog/token-entropy-radar` |
 | `token_stream` | Texto que se genera token a token como un LLM respondiendo. | 16 | 100 ms | 16×1 | `plugins/catalog/token-stream` |
 | `tokenizer` |  | 48 | 62.5 ms | 48×1 | `plugins/catalog/tokenizer` |
+| `tool_call_lifecycle` | Function calling lifecycle: JSON emission, host execution pause, resumption | 7 | 220 ms | 50×1 | `plugins/catalog/tool-call-lifecycle` |
+| `tpu_pod_ring` | High-speed 2D/3D torus ring-allreduce circulating gradients across nodes | 6 | 140 ms | 51×3 | `plugins/catalog/tpu-pod-ring` |
+| `tree_of_thought_mcts` | Tree-of-Thoughts / MCTS reasoning: explores dynamic branches, prunes dead ends, backtracks and isolates the optimal path. | 12 | 260 ms | 52×8 | `plugins/catalog/tree-of-thought-mcts` |
 | `wandb_sparkline` |  | 48 | 62.5 ms | 48×1 | `plugins/catalog/wandb-sparkline` |
 | `weight_decay` |  | 48 | 62.5 ms | 48×1 | `plugins/catalog/weight-decay` |
 
@@ -175,6 +195,7 @@ Every plugin that ships in the package, generated from the code that is publishe
 | `mixture_of_experts` | MoE routing: 4 experts compute in parallel with fluctuating loads. | 166 | 65 ms | 109×1 | `plugins/catalog/mixture-of-experts` |
 | `norton_surface_scan` | MS-DOS ScanDisk-style linear surface scan. Each loop generates a new disk map, cluster layout and defect distribution. | 55 | 340 ms | 120×1 | `plugins/catalog/norton-surface-scan` |
 | `rlhf_arena` | RLHF Chatbot Arena: Blind Ingestion -> Streaming -> Human Preference -> DPO Convergence. | 210 | 65 ms | 135×1 | `plugins/catalog/rlhf-arena` |
+| `subagent_spawn` | Configurable multi-agent workflow. DEMO simulates an orchestration; LIVE renders host-emitted agent lifecycle events. | 67 | 80 ms | 99×3 | `plugins/catalog/subagent-spawn` |
 | `twilight_fjord` | Scandinavian twilight fjord in full-widescreen ultra-high-definition (270×84 micro-pixels): expansive sunset gradient, 3-layer parallax mountains, rocky pine islet, rippling reflections, and migratory cranes. | 36 | 50 ms | 270×42 | `plugins/catalog/twilight-fjord` |
 | `voyager_last_transmission` | The final transmission of Voyager 1: 47 years, 24.3 billion km, one last sign-off. | 322 | 65 ms | 104×1 | `plugins/catalog/voyager-last-transmission` |
 | `whirlwind_warp` | Moving stars acted upon by 16 force fields — faithful JS port of XScreenSaver WhirlwindWarp (Paul 'Joey' Clark). Verified against the original C by a parity test. | 5 | 50 ms | 80×23 | `plugins/catalog/whirlwind-warp` |

@@ -1,8 +1,8 @@
 <h1 align="center">ThoughtStream</h1>
 
 <p align="center">
-  <strong>Text animations in ASCII, ANSI, Unicode and Braille — for terminals and browsers, with one API and one plugin format.</strong><br>
-  250+ ready-made animations. Zero dependencies. Write your own plugin in five lines.
+  <strong>The animation layer for apps that think.</strong><br>
+  280+ ready-made plugins (70+ AI models) for AI agents, CLIs, and web apps — terminal <em>and</em> browser, one API, zero dependencies.
 </p>
 
 <p align="center">
@@ -15,6 +15,7 @@
 <p align="center">
   <a href="https://dennysjmarquez.github.io/thought-stream/"><strong>Live demo</strong></a> ·
   <a href="#quick-start">Quick start</a> ·
+  <a href="#browse-the-catalog">Browse 281 plugins</a> ·
   <a href="#create-your-own-plugin">Create a plugin</a> ·
   <a href="#api-reference">API reference</a>
 </p>
@@ -23,16 +24,36 @@
   <img src="https://cdn.jsdelivr.net/gh/dennysjmarquez/thought-stream@main/docs/assets/hero.svg" alt="A terminal window animating four ThoughtStream plugins at once: a tokenizer, an attention progress bar, a loss sparkline and a KV-cache gauge" width="720">
 </p>
 
-ThoughtStream draws animation frames made of text — spinners, progress bars, "the AI is thinking" indicators, Braille-dot scenes, half-block pixel art, even ANSI art — into a terminal or into any HTML element.
-You choose an animation (a **plugin**), point it at a **container**, and press start:
+Your AI app routes a request. Your CLI deploys to production. Your web UI waits for a response.
+**What does it show while it thinks?** ThoughtStream answers that question — once — for the terminal and the browser.
 
 ```js
-new ThoughtStream('#status').start('pacman');
+// Terminal (Node.js)
+const stream = new ThoughtStream(process.stdout);
+stream.start('chain_of_thought');   // one of 73 AI-specific animations
+
+// Browser (same API, same plugin name)
+new ThoughtStream('#status').start('chain_of_thought');
 ```
+
+### Try it right now (zero install)
+
+Launch the interactive terminal dashboard or play any animation instantly:
+
+```bash
+npx thought-stream
+```
+
+<p align="center">
+  <img src="https://cdn.jsdelivr.net/gh/dennysjmarquez/thought-stream@main/docs/assets/dashboard.png" alt="ThoughtStream Interactive Dashboard in Terminal" width="680">
+</p>
+
+No spinners copy-pasted from Stack Overflow. No two animation libraries for two targets. No dependencies.
 
 ## Contents
 
 - [Why ThoughtStream](#why-thoughtstream)
+- [Browse the catalog](#browse-the-catalog)
 - [Install](#install)
 - [How it works: engine, plugin, container](#how-it-works-engine-plugin-container)
 - [Quick start](#quick-start) — Node.js · Browser · Bundlers · React · Vue · Angular · SSR
@@ -55,16 +76,87 @@ new ThoughtStream('#status').start('pacman');
 
 ## Why ThoughtStream
 
-- **One engine, two worlds.** The same API draws into a Node.js terminal (`process.stdout`) and into any DOM element, from plain HTML to React, Vue and Angular.
-- **250+ plugins in 13 categories** — classic spinners, AI and machine-learning visualisations, terminal effects, algorithms, nature, physics, space, retro art. Every plugin is its own file, so you ship only what you use. Browse them all in the [catalog](https://github.com/dennysjmarquez/thought-stream/blob/main/docs/catalog.md).
-- **Pixel art made of characters.** Built-in Braille (2×4 dots per character) and half-block (1×2 pixels per character) canvases, with true-colour output. In the browser, dense scenes and ANSI art are painted on a real `<canvas>`; ANSI art is drawn glyph by glyph, so it looks the same in every browser and font.
-- **Plays Durdraw animations.** Drop in a `.dur` file made with [Durdraw](https://durdraw.org/) and it becomes a plugin like any other — see [Playing third-party art](#playing-third-party-art-durdraw).
-- **Plugins are tiny.** An animation is an array of strings. When you need more, it can be a function that receives your parameters, or a multitrack timeline.
-- **Learn by reading.** Every function of the SDK, every field of a plugin and every kind of frame has a short, readable [example](#learn-by-example) that you can run in the terminal or in the browser.
-- **Respectful by default.** One drift-compensated clock; it pauses when the tab is hidden or the element is scrolled out of view, and honours `prefers-reduced-motion`.
-- **Zero dependencies**, CommonJS + browser global + ES module entry points, TypeScript types included.
+The ecosystem has `ora` (20 M downloads/week, Node only) and `Typed.js` (145 k/week, browser only).
+Fullstack teams maintain **two separate animation stacks** — one for the CLI, one for the web UI.
+ThoughtStream ends that split.
+
+| | `ora` | `cli-spinners` | `Typed.js` | **ThoughtStream** |
+|---|:---:|:---:|:---:|:---:|
+| Works in Node.js | ✅ | ✅ | ❌ | ✅ |
+| Works in the browser | ❌ | ❌ | ✅ | ✅ |
+| Ready-made animations | ~60 | ~70 | ❌ | **281** |
+| AI / ML themed | ❌ | ❌ | ❌ | **73** |
+| Live gallery / preview | ❌ | ❌ | ❌ | ✅ |
+| Zero dependencies | ✅ | ✅ | ✅ | ✅ |
+| Write a plugin in | — | JSON array | — | **5 lines** |
+
+**73 AI-native animations — the only library with any.**
+`token_stream`, `chain_of_thought`, `attention_heads`, `kv_cache`, `beam_search`, `hallucination_check`, `rlhf_arena`, `mixture_of_experts` and 65 more. These are the states your AI app already needs to show; they ship ready.
+
+**One API for terminal and browser.**
+`new ThoughtStream(process.stdout)` and `new ThoughtStream(domElement)` — same call, same plugin name, same behaviour. Write the animation once; it runs everywhere.
+
+**Discovery built in.**
+`cli-spinners` is a JSON file — no motor, no preview, no categories. ThoughtStream ships a [live gallery](https://dennysjmarquez.github.io/thought-stream/) and an interactive terminal browser (`npx thought-stream`). You choose the animation before you write a line of code.
+
+**Plugins are tiny — 5 lines.**
+```js
+ThoughtStream.register({ name: 'my_thinking', frames: ['⠋', '⠙', '⠹', '⠸', '⠼'], interval: 80 });
+```
+The engine handles drift correction, pause on hidden tab, `prefers-reduced-motion` and cleanup.
+
+**Zero dependencies**, CommonJS + browser global + ES module, TypeScript types included.
+
+## Browse the catalog
+
+**281 animations across 13 categories.** Try any of them instantly:
+
+```bash
+npx thought-stream                        # interactive browser — arrow keys, Enter
+npx thought-stream twilight_fjord         # play one by name
+npx thought-stream list ai-models         # list a category
+```
+
+| Category | Count | Highlights |
+|---|---:|---|
+| 🧠 `ai-models` | 73 | `chain_of_thought`, `attention_heads`, `kv_cache`, `beam_search`, `mixture_of_experts` |
+| 🕹️ `classic` | 53 | `pacman`, `matrix_rain`, `spinner_dots`, `dna`, `tetris` |
+| 💻 `terminal-fx` | 49 | `packet_flow`, `norton_surface_scan`, `hacker_rain`, `port_scan` |
+| 🎭 `iconic` | 24 | `bios_post`, `chess_checkmate`, `apollo_mission` |
+| 🌲 `nature` | 21 | `twilight_fjord`, `boreal_odyssey`, `braille_nebula` |
+| 📺 `retro` | 20 | `bbs_acid_intro`, `c64_boot`, `vhs_tracking` |
+| 🎪 `fun` | 17 | `nyan_cat`, `breathing`, `bouncing_ball` |
+| ✨ `featured` | 12 | Curated picks from across all categories |
+| 🧮 `algorithms` | 7 | `bubble_sort`, `merge_sort`, `binary_search` |
+| ⚛️ `physics` | 6 | `gravity_well`, `pendulum`, `wave_collapse` |
+| ⣿ `braille` | 4 | `braille_plasma`, `braille_wave` |
+| 🌌 `space` | 4 | `event_horizon`, `starfield` |
+| 🎬 `cinema` | 3 | `film_countdown`, `clapperboard` |
+
+Browse the full [catalog](https://github.com/dennysjmarquez/thought-stream/blob/main/docs/catalog.md) or the [live gallery](https://dennysjmarquez.github.io/thought-stream/).
 
 ## Install
+
+### Run instantly with `npx` (Zero install)
+
+Preview and run any animation directly in your terminal without installing dependencies:
+
+```bash
+# Play an AI reasoning tree animation
+npx thought-stream tree_of_thought_mcts
+
+# Play an autonomous ReAct agent loop or MCP handshake
+npx thought-stream react_agent_loop
+npx thought-stream mcp_handshake
+
+# Browse all 74 AI & machine learning plugins
+npx thought-stream list ai-models
+
+# Launch the interactive terminal selector
+npx thought-stream
+```
+
+### Add to your project
 
 ```bash
 npm install thought-stream

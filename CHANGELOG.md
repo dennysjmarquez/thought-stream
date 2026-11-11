@@ -2,6 +2,24 @@
 
 Every release of thought-stream, newest first. Versions follow [Semantic Versioning](https://semver.org/).
 
+## [1.1.1](https://github.com/dennysjmarquez/thought-stream/releases/tag/v1.1.1) - 2026-11-11
+
+ThoughtStream 1.1.1 — interactive dashboard enhancements, non-repeating random navigation, and terminal scaling refinement
+
+ThoughtStream 1.1.1 is a maintenance and UX release bringing ergonomic visual indicators to the interactive CLI dashboard, refined player controls with non-repeating randomized navigation, and seamless multiline terminal rendering.
+
+Highlights of 1.1.1
+
+- Interactive CLI Dashboard enhancements: Distinct emoji glyphs now represent all 13 plugin categories (`ai-models`, `classic`, `terminal-fx`, `nature`, `retro`, `algorithms`, etc.), providing immediate visual recognition when navigating the terminal menu.
+- Non-repeating randomized navigation: Pressing `[n]` or Right Arrow during interactive playback now cycles to the next random plugin while strictly excluding the currently active animation. Randomization respects the current category context with automatic fallback to the global pool.
+- In-category quick random action: Added `🎲 Play Random in this Category` as a top-level action inside category pagination views for rapid exploratory discovery.
+- Terminal multiline frame rendering: Enhanced standard terminal playback via the public entry point with automatic proportional scaling (`scaleAnsiFrame`) for widescreen and high-density art plugins, preventing horizontal tearing and line wrap anomalies across varying terminal dimensions.
+- Header visual spacing: Added deliberate whitespace separation between the control bar and active animation canvas, ensuring crisp layout clarity during interactive sessions.
+
+Installation
+
+    npm install thought-stream@1.1.1
+
 ## [1.1.0](https://github.com/dennysjmarquez/thought-stream/releases/tag/v1.1.0) - 2026-11-10
 
 ThoughtStream 1.1.0 — multi-category taxonomy, featured showcase collection, and Whirlwind Warp flagship plugin
