@@ -10,4 +10,3 @@ require('./catalog/subagent-spawn.js');
 require('./catalog/twilight-fjord.js');
 require('./catalog/voyager-last-transmission.js');
 require('./catalog/whirlwind-warp.js');
-require('./catalog/whirlwind-warp.js');

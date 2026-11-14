@@ -2,6 +2,28 @@
 
 Every release of thought-stream, newest first. Versions follow [Semantic Versioning](https://semver.org/).
 
+## [1.1.2](https://github.com/dennysjmarquez/thought-stream/releases/tag/v1.1.2) - 2026-11-14
+
+ThoughtStream 1.1.2 — multiline terminal animation continuity, speed scaling correction, and catalog cleanup
+
+ThoughtStream 1.1.2 is a patch release fixing multiline terminal playback for stateful generative animations, correcting the global speed multiplier in the TTY rendering path, and removing an internal plugin variant from the catalog.
+
+What changed
+
+- Multiline terminal animation continuity: Stateful generative plugins (e.g. whirlwind_warp, subagent_spawn, boreal_odyssey) now correctly regenerate their frame batch on each loop when played in a terminal via the public CLI. Previously the first batch repeated indefinitely, causing animations to appear frozen after a fraction of a second. The TTY rendering patch now matches the frame-regeneration behavior of the original engine tick and preview.js.
+
+- Global speed scaling honored in TTY rendering: The `--speed` flag and `stream.speed` are now correctly applied to multiline terminal playback. The delay calculation uses the exact formula from the original engine tick: frame-scoped timing is scaled by `globalSpeed / baseTiming`; frames without their own timing use `globalSpeed` directly.
+
+- Documentation: Updated the Terminal note in the public README to reflect that multiline frames now animate in place with proportional scaling and cursor rewinding, rather than stacking and scrolling the terminal.
+
+Installation & Quick Start
+
+    # Run instantly with npx (zero install)
+    npx thought-stream
+
+    # Or add to your project
+    npm install thought-stream@1.1.2
+
 ## [1.1.1](https://github.com/dennysjmarquez/thought-stream/releases/tag/v1.1.1) - 2026-11-11
 
 ThoughtStream 1.1.1 — interactive dashboard enhancements, non-repeating random navigation, and terminal scaling refinement

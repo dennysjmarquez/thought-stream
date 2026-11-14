@@ -198,8 +198,8 @@ Every plugin that ships in the package, generated from the code that is publishe
 | `subagent_spawn` | Configurable multi-agent workflow. DEMO simulates an orchestration; LIVE renders host-emitted agent lifecycle events. | 67 | 80 ms | 99×3 | `plugins/catalog/subagent-spawn` |
 | `twilight_fjord` | Scandinavian twilight fjord in full-widescreen ultra-high-definition (270×84 micro-pixels): expansive sunset gradient, 3-layer parallax mountains, rocky pine islet, rippling reflections, and migratory cranes. | 36 | 50 ms | 270×42 | `plugins/catalog/twilight-fjord` |
 | `voyager_last_transmission` | The final transmission of Voyager 1: 47 years, 24.3 billion km, one last sign-off. | 322 | 65 ms | 104×1 | `plugins/catalog/voyager-last-transmission` |
-| `whirlwind_warp` | Moving stars acted upon by 16 force fields — faithful JS port of XScreenSaver WhirlwindWarp (Paul 'Joey' Clark). Verified against the original C by a parity test. | 5 | 50 ms | 80×23 | `plugins/catalog/whirlwind-warp` |
-| `whirlwind_warp_blocks` | WhirlWindWarp drawn with solid half-block pixels (one colour per pixel); the browser paints it on a <canvas>. Same simulation as whirlwind_warp. | 5 | 50 ms | 80×23 | `plugins/catalog/whirlwind-warp` |
+| `whirlwind_warp` | Moving stars acted upon by 16 force fields — faithful JS port of XScreenSaver WhirlwindWarp (Paul 'Joey' Clark). Verified against the original C by a parity test. | 5 | 50 ms | 160×40 | `plugins/catalog/whirlwind-warp` |
+| `whirlwind_warp_blocks` | WhirlWindWarp drawn with solid half-block pixels (one colour per pixel); the browser paints it on a <canvas>. Same simulation as whirlwind_warp. | 5 | 50 ms | 160×40 | `plugins/catalog/whirlwind-warp` |
 
 ## fun
 

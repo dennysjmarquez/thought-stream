@@ -1,7 +1,7 @@
 {
   "name": "thought-stream",
-  "version": "1.1.1",
-  "description": "The zero-dependency animation runtime for apps that think. 270+ text animations in ASCII, ANSI, Unicode and Braille for AI agents, CLIs and browsers.",
+  "version": "1.1.2",
+  "description": "A programmable visual engine for text-mode experiences. 280+ ready-made plugins for terminals and browsers — plus procedural frame generators, multitrack timelines, live plugin APIs, ANSI color, and Braille and half-block canvases. Build, adapt, and extend your own text-mode creations with one zero-dependency SDK and a unified API.",
   "type": "commonjs",
   "keywords": [
     "ai-agent",

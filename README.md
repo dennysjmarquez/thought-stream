@@ -1,8 +1,8 @@
 <h1 align="center">ThoughtStream</h1>
 
 <p align="center">
-  <strong>The animation layer for apps that think.</strong><br>
-  280+ ready-made plugins (70+ AI models) for AI agents, CLIs, and web apps — terminal <em>and</em> browser, one API, zero dependencies.
+  <strong>A programmable visual engine for text-mode experiences.</strong><br>
+  280+ ready-made plugins for terminals and browsers — plus procedural frame generators, multitrack timelines, live plugin APIs, ANSI color, and Braille and half-block canvases. Build, adapt, and extend your own text-mode creations with one zero-dependency SDK and a unified API.
 </p>
 
 <p align="center">
@@ -222,7 +222,7 @@ setTimeout(() => stream.succeed('Deployed to production'), 3000);
 
 `succeed`, `fail`, `warn` and `info` stop the animation and print a coloured status line (`✔ ✖ ⚠ ℹ`).
 
-> **Terminal note.** Most plugins draw one line and redraw it in place. A plugin whose frames span several lines (Braille scenes, ANSI art) is made for the browser: in a terminal each frame is printed below the previous one, so it scrolls. The [catalog](https://github.com/dennysjmarquez/thought-stream/blob/main/docs/catalog.md) lists every plugin's size in columns × lines; to animate a multi-line frame in a terminal, see [Known limitations](#known-limitations).
+> **Terminal note.** Most plugins draw one line and redraw it in place. A plugin whose frames span several lines (Braille scenes, ANSI art) animates in the terminal too: each frame is scaled down to fit the window and redrawn in place by rewinding the cursor, so frames never stack on top of each other or scroll the terminal down. The [catalog](https://github.com/dennysjmarquez/thought-stream/blob/main/docs/catalog.md) lists every plugin's size in columns × lines.
 
 ### Browser, no build step
 

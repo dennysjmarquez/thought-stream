@@ -23,8 +23,10 @@ const readline = require('readline');
 const ROOT = path.resolve(__dirname, '..');
 
 function resolveEngine() {
+  // index.js NO es candidato: no puede existir en el árbol público (guards.ALLOWED
+  // no lo admite), así que en producción nunca estaría. Es solo un re-export delgado
+  // para el repo privado; el motor real —con el rendering patch— es thought-stream.js.
   const candidates = [
-    path.join(ROOT, 'index.js'),
     path.join(ROOT, 'thought-stream.js'),
     path.join(ROOT, 'dist', 'thought-stream.js')
   ];
